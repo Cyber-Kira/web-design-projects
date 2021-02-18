@@ -62,6 +62,7 @@ header {
   list-style: none;
   padding: 0;
   margin-top: 2em;
+  text-transform: uppercase;
 }
 
 .nav-list-item {
