@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-7">
+          <h1>Структура программы</h1>
+          <h2>Инструкции</h2>
+          <p>Программа на С++ состоит из набора инструкций. Каждая инструкция (statement) выполняет определенное
+            действие. В конце инструкции в языке C++ ставится точка с запятой (;). Данный знак указывает компилятору на
+            завершение инструкции. Например:</p>
+          <pre><code>std::cout << "Hello World!";</code></pre>
+          <p>Данная строка выводит на консоль строку "Hello world!", является инструкцией и поэтому завершается точкой с
+            запятой.</p>
+          <p>Набор инструкций может представлять блок кода. Блок кода заключается в фигурные скобки, а инструкции
+            помещаются между открывающей и закрывающей фигурными скобками:</p>
+          <pre>
+<code>
+{
+  std::cout << "Hello World!";
+  std::cout << "Bye World!";
+}   
+</code>
+</pre>
+          <p>В этом блоке кода две инструкции, которые выводят на консоль определенную строку.</p>
+          <h2>Функция main</h2>
+          <p>Каждая программа на языке С++ должна иметь как минимум одну функцию - функцию <strong>main()</strong>.
+            Именно с этой функции начинается выполнение приложения. Ее имя <strong>mainq</strong> фиксировано и для всех
+            программ на Си всегда одинаково.</p>
+          <p>Функция также является блоком кода, поэтому ее тело обрамляется фигурными скобками, между которыми
+            определяется набор инструкций.</p>
+          <p>В частности, при создании первой программы использовалась следующая функция main:</p>
+          <pre>
+<code>
+#include < iostream>                 // подключаем заголовочный файл iostream
+
+int main()                          // определяем функцию main
+{                                   // начало функции
+    std::cout << "Hello World!";    // выводим строку на консоль
+    return 0;                       // выходим из функции
+}                                   // конец функции
+</code>
+</pre>
+          <p>Определение функии main начинается с возвращаемого типа. Функция main в любом случае должна возвращать
+            число. Поэтому ее определение начинается с ключевого слова <strong>int</strong>.</p>
+          <p>Далее идет название функции, то есть <strong>main</strong>. После названия в скобках идет список
+            параметров. В данном случае функция main не принимает никаких параметров, поэтому после названия указаны
+            пустые скобки. Однако есть другие варианты определения функции main, которые подразумевыют использование
+            параметров. В частности, нередко может встречаться следующее определение функции main, использующей
+            параметры:</p>
+          <pre>
+<code>
+int main (int argc, char *argv[]) 
+{
+      
+} 
+</code>
+</pre>
+          <p>И после списка параметров идет блок кода, который и содержит в виде инструкций собственно те действия,
+            выполняемые функцией main.</p>
+          <h2>Директивы препроцессора</h2>
+          <p>В примере выше на консоль выводится строка, но чтобы использовать вывод на консоль, необходимо в начале
+            файла с исходным кодом подключать библиотеку iostream с помощью директивы <strong>include</strong>.</p>
+          <p>Директива <strong>include</strong> является директивой препроцессора. Каждая директива препроцессора
+            размещается на одной строке. И в отличие от обычных инструкциий языка C++, которые завершаются точкой с
+            запятой ; , признаком завершения препроцессорной директивы является перевод на новую строку. Кроме того,
+            директива должна начинаться со знака решетки #. Непосредственно директива "include" определяет, какие файлы
+            и библиотеки надо подключить в данном месте в код программы.</p>
+          <h2>Комментарии</h2>
+          <p>Исходный код может содержать комментарии. Комментарии позволяют понять смыл программы, что делают те или
+            иные ее части. При компиляции комментарии игнорируются и не оказывают никакого влияние на работу приложения
+            и на его размер.</p>
+          <p>В языке C++ есть два типа комментариев: однострочный и многострочный. Однострочный комментарий размещается
+            на одной строке после двойного слеша //:</p>
+          <pre>
+<code>
+#include < iostream>                // подключаем библиотеку iostream
+
+int main()                          // определяем функцию main
+{                                   // начало функции
+    std::cout << "Hello World!";    // выводим строку на консоль
+    return 0;                       // выходим из функции
+}                                   // конец функции
+</code>
+</pre>
+          <p>Многострочный комментарий заключается между символами <strong>/* текст комментария */</strong>. Он может
+            размещаться на нескольких строках. Например:</p>
+          <pre>
+<code>
+#include < iostream>
+/*
+    Определение функции Main
+    Выводит на консоль строку Hello World!
+*/
+int main()
+{
+    std::cout << "Hello World!"; // вывод строки на консоль
+    return 0;
+}
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

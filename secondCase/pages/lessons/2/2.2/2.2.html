@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-7">
+          <h1>Переменные</h1>
+          <p>Как и во многих языках программирования, в C++ для хранения данных используются переменные. Переменная
+            имеет тип, имя и значение. Тип определяет, какую информацию может хранить переменная.</p>
+          <p>Перед использованием любую переменную надо определить. Синтаксис определения переменной выглядит следующим
+            образом:</p>
+          <pre><code>тип_переменной имя_переменной;</code></pre>
+          <p>Простейшее определение переменной:</p>
+          <pre><code>int age;</code></pre>
+          <p>Здесь определена переменная age, которая имеет тип <strong>int</strong>. Поскольку определение переменной
+            представляет собой инструкцию, то после него ставится точка с запятой.</p>
+          <p>Также стоит учитывать, что C++ - регистрозависимый язык, а это значит, что регистр символов имеет большое
+            значение. То есть в следующем коде будут определяться две разные переменные:</p>
+          <pre>
+<code>
+int age;
+int Age;
+</code>
+</pre>
+          <p>Поэтому переменная Age не будет представлять то же самое, что и переменная age.</p>
+          <p>Кроме того, в качестве имени переменной нельзя использовать ключевые слова языке C++, например, for или if.
+            Но таких слов не так много: alignas, alignof, asm, auto, bool, break, case, catch, char, char16_t, char32_t,
+            class, const, constexpr, const_cast, continue, decltype, default, delete, do, double, dynamic_cast, else,
+            enum, explicit, export, extern, false, float, for, friend, goto, if, inline, int, long, mutubale, namespace,
+            new, noexcept, nullptr, operator, private, protected, public, register, reinterpret_cast, return, short,
+            signed, sizeof, static, static_assert, static_cast, struct, switch, template, this, thread_local, throw,
+            true, try, typedef, typeid, typename, union, unsigned, using, virtual, void, volatile, wchar_t, while.</p>
+          <p>Также нельзя объявить больше одной переменной с одним и тем же именем, например:</p>
+          <pre>
+<code>
+int age;
+int age;
+</code>
+</pre>
+          <p>Подобное определение вызовет ошибку на этапе компиляции.</p>
+          <p>И в довершеие следует сказать, что переменным стоит давать осмысленные имена, которые будут говорить об их
+            предназначении.</p>
+          <h2>Инициализация</h2>
+          <p>После определения переменной можно присвоить некоторое значение:</p>
+          <pre>
+<code>
+int age;
+age = 20;
+</code>
+</pre>
+          <p>Например, определим в прогамме переменную и выведем ее значение на консоль:</p>
+          <pre>
+<code>
+#include < iostream>
+
+int main()
+{
+    int age;
+    age = 28;
+    std::cout<<"Age = " << age;
+    return 0;
+}
+</code>
+</pre>
+          <p>С помощью последовательности операторов << можно вывести несколько значений на консоль.</p> <p>После
+              компиляции и запуска скомпилированной программы на консоль будет выведено число 28.</p>
+          <p>Однако также можно сразу при определении переменной дать ей некоторое начальное значение. Данный прием
+            называется <strong>инициализацией</strong>, то есть присвоение переменной начального значения:</p>
+          <pre>
+<code>
+#include < iostream>
+
+int main()
+{
+    int age = 28;
+    std::cout<<"Age = " << age;
+    return 0;
+}
+</code>
+</pre>
+          <h2>Инициализация по умолчанию</h2>
+          <p>Если переменную не инициализировать, то происходит ее инициализация по умолчанию. И переменная получает
+            некоторое значение по умолчанию, которое зависит от места, где эта переменная определена.</p>
+          <p>Если переменная, которая представляет встроенный тип (например, тип int), определена внутри функции, то она
+            получает неопределенное значение. Если переменная встроенного типа определена вне функции, то она получает
+            то значение по умолчанию, которое соответствует ее типу. Для числовых типов это число 0. Например:</p>
+          <pre>
+<code>
+#include < iostream>
+
+int x;
+int main()
+{
+    int y;
+    std::cout <<"X = " << x << "\n";
+    std::cout <<"Y = " << y;
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Переменная x определена вне функции, и поэтому она получит значение по умолчанию - число 0.</p>
+          <p>Гораздо сложнее дело обстоит с переменной y, которая определена внутри функции main - ее значение будет
+            неопределенным, и многое будет зависеть от используемого компилятора. В частности, вывод программы,
+            скомпилированной с помощью компилятора G++, может выглядеть следующим образом:</p>
+          <pre>
+<code>
+X = 0
+Y = 4200475
+</code>
+</pre>
+          <p>А в Visual Studio отсутствие значения переменной y вызовет ошибку.</p>
+          <p>Но в любом случае перед использованием переменной лучше явным образом назначать ей определенное значение, а
+            не полагаться на значение по умолчанию.</p>
+          <h2>Изменение значения</h2>
+          <p>Ключевой особенностью переменных является то, что мы можем изменять их значения:</p>
+          <pre>
+<code>
+#include < iostream>
+
+int main()
+{
+    int x = 6;
+    x = 8;
+    x = 10;
+    std::cout <<"X = " << x; // X = 10
+      
+    return 0;
+}
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

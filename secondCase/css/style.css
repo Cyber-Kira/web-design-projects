@@ -1,0 +1,146 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+}
+
+h1, h2, h3, p {
+  font-family: Helvetica, sans-serif;
+  padding-bottom: .625rem;
+}
+
+h1 {
+  padding-top: 1rem;
+  padding-bottom: 1.2rem;
+}
+
+img {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.paginator a img {
+  width: 45px;
+  height: 45px;
+}
+
+a {
+  overflow-wrap: break-word
+}
+
+p {
+  padding-bottom: .5rem;
+}
+
+li {
+  overflow-wrap: break-word;
+}
+
+table {
+  margin: 1rem 0;
+}
+
+pre {
+  margin-bottom: 1rem;
+  background-color: rgb(56, 67, 119);
+  color: rgb(255, 255, 255);
+  padding: .5rem 1rem;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.col-sm ul {
+  list-style: none;
+  padding-left: .8rem;
+}
+
+.col-sm ul a {
+  text-decoration: none;
+  color: #235a97;
+  font-family: Helvetica, sans-serif;
+}
+
+.secondary-color {
+  background-color: rgba(101, 154, 210, .4);
+}
+
+.card {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: #FFFFFF;
+
+  box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132),0 0.3px 0.9px 0 rgba(0,0,0,0.108);
+  border-radius : 4px;
+  height: 100%;
+}
+
+.card li {
+  display: flex;
+  align-items: center;
+}
+
+.card span {
+  font-size: 1.2rem;
+  min-height: 70px;
+}
+
+.col-sm {
+  margin-bottom: 5rem;
+}
+
+.card li a {
+  width: 100%;
+  padding: 15px 5px;
+}
+
+.card li a:hover {
+  background-color: #c1d6ed;
+  color: rgba(0,0,0,.9);
+  transition: .35s;
+}
+
+.btn-main {
+  margin-bottom: 2rem;
+}
+
+.main_info {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+
+.footer_p {
+  font-size: 1.2rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.main__pagination {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.paginator {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 50%;
+  height: 100px;
+  padding: 1.5rem 0 1.5rem 0;
+}
+
+.paginator > a {
+  display: flex;
+  justify-content: center;
+  border-radius: 15px;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  padding: 0 .5rem;
+  transition: .5s;
+}

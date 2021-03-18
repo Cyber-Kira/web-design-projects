@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-7">
+          <h1>Арифметические операции</h1>
+          <p>Арифметические операции производятся над числами. Значения, которые участвуют в операции, называются
+            операндами. В языке программирования C++ арифметические операции бинарными (производятся над двумя
+            операндами) и унарными (выполняются над одним операндом). К бинарным операциям относят следующие:</p>
+          <ul>
+            <li><strong>+</strong>
+              <p>Операция сложения возвращает сумму двух чисел:</p>
+              <pre>
+<code>
+int a = 10;
+int b = 7;
+int c = a + b;  // 17
+int d = 4 + b;  // 11
+</code>
+</pre>
+            </li>
+            <li><strong>-</strong>
+              <p>Операция вычитания возвращает разность двух чисел:</p>
+              <pre>
+<code>
+int a = 10;
+int b = 7;
+int c = a - b;  // 3
+int d = 41 - b; // 34
+</code>
+</pre>
+            </li>
+            <li><strong>*</strong>
+              <p>Операция умножения возвращает произведение двух чисел:</p>
+              <pre>
+<code>
+int a = 10;
+int b = 7;
+int c = a * b;  // 70
+int d = b * 5;  // 35
+</code>
+</pre>
+            </li>
+            <li><strong>/</strong>
+              <p>Операция деления возвращает частное двух чисел:</p>
+              <pre>
+<code>
+int a = 20;
+int b = 5;
+int c = a / b;  // 4
+double d = 22.5 / 4.5;  // 5
+</code>
+</pre>
+              <p>При делении стоит быть внимательным, так как если в операции участвуют два целых числа, то результат
+                деления будет округляться до целого числа, даже если результат присваивается переменной float или
+                double:</p>
+              <pre>
+<code>
+double k = 10 / 4;     // 2
+std::cout << k;
+</code>
+</pre>
+              <p>Чтобы результат представлял числос плавающей точкой, один из операндов также должен представлять число
+                с
+                плавающей точкой:</p>
+              <pre>
+<code>
+double k = 10.0 / 4;     // 2.5
+std::cout << k;
+</code>
+</pre>
+            </li>
+            <li><strong>%</strong>
+              <p>Операция получения остатка от целочисленного деления:</p>
+              <pre>
+<code>
+int a = 33;
+int b = 5;
+int c = a % b;  // 3
+int d = 22 % 4; // 2 (22 - 4*5 = 2)
+</code>
+</pre>
+            </li>
+          </ul>
+          <p>Также есть две унарные арифметические операции, которые производятся над одним числом: ++ (инкремент) и --
+            (декремент). Каждая из операций имеет две разновидности: префиксная и постфиксная:</p>
+          <ul>
+            <li><strong>Префиксный инкремент</strong>
+              <p>Увеличивает значение переменной на единицу и полученный результат используется как значение выражения
+                ++x</p>
+              <pre>
+<code>
+int a = 8;
+int b = ++a;
+std::cout << a << "\n"; // 9
+std::cout << b << "\n"; // 9
+</code>
+</pre>
+            </li>
+            <li><strong>Постфиксный инкремент</strong>
+              <p>Увеличивает значение переменной на единицу, но значением выражения x++ будет то, которое было до
+                увеличения на единицу</p>
+              <pre>
+<code>
+int a = 8;
+int b = a++;
+std::cout << a << "\n"; // 9
+std::cout << b << "\n"; // 8
+</code>
+</pre>
+            </li>
+            <li><strong>Префиксный декремент</strong>
+              <p>Уменьшает значение переменной на единицу, и полученное значение используется как значение выражения --x
+              </p>
+              <pre>
+<code>
+int a = 8;
+int b = --a;
+std::cout << a << "\n"; // 7
+std::cout << b << "\n"; // 7
+</code>
+</pre>
+            </li>
+            <li><strong>Постфиксный декремент</strong>
+              <p>Уменьшает значение переменной на единицу, но значением выражения x-- будет то, которое было до
+                уменьшения на единицу</p>
+              <pre>
+<code>
+int a = 8;
+int b = a--;
+std::cout << a << "\n"; // 7
+std::cout << b << "\n"; // 8
+</code>
+</pre>
+            </li>
+          </ul>
+          <p>Арифметические операции вычисляются слева направо. Одни операции имеют больший приоритет чем другие и
+            поэтому выполняются вначале. Операции в порядке уменьшения приоритета:</p>
+          <p>+ (инкремент), - (декремент)</p>
+          <p>* (умножение), / (деление), % (остаток от деления)</p>
+          <p>+ (сложение), - (вычитание)</p>
+          <p>Приоритет операций следует учитывать при выполнении набора арифметических выражений:</p>
+          <pre>
+<code>
+int a = 8;
+int b = 7;
+int c = a + 5 * ++b;      // 48
+std::cout << c;
+</code>
+</pre>
+          <p>Хотя операции выполняются слева направо, но вначале будет выполняться операция инкремента ++b, которая
+            увеличит значение переменной b и возвратит его в качестве результата, так как эта операция имеет больший
+            приоритет. Затем выполняется умножение 5 * ++b, и только в последнюю очередь выполняется сложение a + 5 *
+            ++b</p>
+          <p>Скобки позволяют переопределить порядок вычислений. Например:</p>
+          <pre>
+<code>
+int a = 8;
+int b = 7;
+int c = (a + 5) * ++b;      // 104
+std::cout << c;
+</code>
+</pre>
+          <p>Несмотря на то, что операция сложения имеет меньший приоритет, но вначале будет выполняться именно
+            сложение, а не умножение, так как операция сложения заключена в скобки.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

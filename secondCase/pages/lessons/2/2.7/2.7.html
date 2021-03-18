@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-7">
+          <h1>Условные выражения</h1>
+          <p>Условные выражения представляют собой некоторое условие и возвращают значение типа <strong>bool</strong>,
+            то есть значение <strong>true</strong> (если условие истинно), либо значение <strong>false</strong> (если
+            условие ложно). К условным выражениям относятся операции отношения и логические операции.</p>
+          <h2>Операции отношения</h2>
+          <p>В языке программирования C++ есть следующие операции отношения:</p>
+          <ul>
+            <li><strong>==</strong>
+              <p>Операция "равно". Возвращает true, если оба операнда равны, и false, если они не равны:</p>
+              <pre>
+<code>
+int a = 10;
+int b = 4;
+bool c = a == b;   // false
+bool d = a == 10;  // true
+</code>
+</pre>
+            </li>
+            <li><strong>></strong>
+              <p>Операция "больше чем". Возвращает true, если первый операнд больше второго, и false, если первый
+                операнд меньше второго:</p>
+              <pre>
+<code>
+int a = 10;
+int b = 4;
+bool c = a > b;  // true
+</code>
+</pre>
+            </li>
+            <li><strong>
+                <</strong> <p>Операция "меньше чем". Возвращает true, если первый операнд меньше второго, и false, если
+                  первый операнд больше второго:</p>
+                  <pre><code>bool c = 10 < 4; // false</code></pre>
+            </li>
+            <li><strong>
+                <=</strong> <p>Операция "меньше или равно". Возвращает true, если первый операнд меньше или равен
+                  второму, и false, если первый операнд больше второго:</p>
+                  <pre>
+<code>
+bool c = 10 <= 4;    // false
+bool d = 10 <= 14;   // true
+</code>
+</pre>
+            </li>
+            <li><strong>>=</strong>
+              <p>Операция "больше или равно". Возвращает true, если первый операнд больше или равен второму, и false,
+                если первый операнд меньше второго:</p>
+              <pre>
+<code>
+bool c = 10 >= 4;    // true
+bool d = 10 >= 14;   // false
+</code>
+</pre>
+            </li>
+            <li><strong>!=</strong>
+              <p>Операция "не равно". Возвращает true, если первый операнд не равен второму, и false, если оба операнда
+                равны:</p>
+              <pre>
+<code>
+bool c = 10 != 4;   // true
+bool d = 4 != 4;    // false
+</code>
+</pre>
+            </li>
+          </ul>
+          <p>Обычно операции отношения применяются в условных конструкциях типа if...else, которые будут рассмотрены
+            далее.</p>
+          <h2>Логические операции</h2>
+          <p>Логические операции обычно объединяют несколько операций отношения. К логическим операциям относят
+            следующие:</p>
+          <ul>
+            <li><strong>!</strong> (операция отрицания)
+              <p>Унарная операция, которая возвращает true, если операнд равен false. Если операнд равен true, операция
+                возвращает false.</p>
+              <pre>
+<code>
+bool a = true;
+bool b = !a;         // false
+bool c =!10 < 5;     // true
+</code>
+</pre>
+            </li>
+            <li><strong>&&</strong> (конъюнкция, логическое умножение)
+              <p>Возвращает true, если оба операнда не равны false. Возвращает false, если хотя бы один операнд равен
+                false.</p>
+              <pre>
+<code>
+bool a = true;
+bool b = false;
+bool c = a && b;    // false
+bool d = a && true; // true
+</code>
+</pre>
+            </li>
+            <li><strong>||</strong> (дизъюнкция, логическое сложение)
+              <p>Возвращает true, если хотя бы один операнд равен true. Возвращает false, если оба операнда равны false.
+              </p>
+              <pre>
+<code>
+bool a = true;
+bool b = false;
+bool c = a || b;        // true
+bool d = b || false;    // false
+</code>
+</pre>
+            </li>
+          </ul>
+          <p>Используем одновременно несколько логических операций и операций сравнения:</p>
+          <pre>
+<code>
+#include < iostream>
+
+int main()
+{
+    bool a = -2 > 5;             // false
+    bool b = 0 < 7;              // true
+    bool c = 10 > 5 && 7 < 11;    // true
+    bool d = a && b || c;       // true
+    std::cout << a << "\n";     // 0
+    std::cout << b << "\n";     // 1
+    std::cout << c << "\n";     // 1
+    std::cout << d << "\n";     // 1
+    return 0;
+}
+</code>
+</pre>
+          <p>Следует обратить внимание, что на консоль выводится не непосредственно true или false, а их числовые
+            эквиваленты - 1 для true и 0 для false.</p>
+          <p>И также стоит учитывать, что операции отношения имеют больший приоритет, чем логические операции. Поэтому в
+            выражении 10 > 5 && 7 < 11 вначале будут выполняться подвыражения - операции отношения 10> 5 и 7 < 11, а
+                затем собственно операция логического умножения.</p> <div class="main__pagination">
+                <div class="paginator previous"><a href="./lab1.html">
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                    Лабораторная №1</a></div>
+                <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+                </div>
+        </div>
+      </div>
+      <div class="col-sm"></div>
+    </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
