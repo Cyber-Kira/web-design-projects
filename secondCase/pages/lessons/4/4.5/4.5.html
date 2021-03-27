@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Указатели и массивы</h1>
+          <p>В C++ указатели и массивы тесно связаны. Обычно компилятор преобразует массив в указатели. С помощью
+            указателей можно манипулировать элементами массива, как и с помощью индексов.</p>
+          <p>Имя массива по сути является адресом его первого элемента. Соответственно через операцию разыменования мы
+            можем получить значение по этому адресу:</p>
+          <pre>
+<code>
+int a[] = {1, 2, 3, 4, 5};
+std::cout << "a[0] = " << *a << std::endl;    // a[0] = 1
+</code>
+</pre>
+          <p>Прибавляя к адресу первого элемента некоторое число, мы можем получить определенны элемент массив.
+            Например, в цикле пробежимся по всем элементам:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    const int n = 5;
+    int a[n] = {1, 2, 3, 4, 5};
+      
+    for(int i=0; i < n; i++)
+    {
+        std::cout << "a[" << i << "]: address=" << a+i << "\tvalue=" << *(a+i) << std::endl;
+    }
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>То есть, например, адрес второго элемента будет представлять выражение a+1, а его значение - *(a+1).</p>
+          <p>В отношении сложения и вычитания здесь действуют те же правила, что и в операциях с указателями. Добавление
+            единицы означает прибавление к адресу значения, которое равно размеру типа массива. Так, в данном случае
+            массив представляет тип int, размер которого, как правило, составляет 4 байта, поэтому прибавление единицы к
+            адресу означает увеличение адреса на 4. Прибавляя к адресу 2, мы увеличиваем значение адреса на 4 * 2 = 8. И
+            так далее.</p>
+          <p>И в итоге программа выведет на консоль следующий результат:</p>
+          <pre>
+<code>
+a[0]: address=0x60fe84	value=1
+a[1]: address=0x60fe88	value=2
+a[2]: address=0x60fe8c	value=3
+a[3]: address=0x60fe90	value=4
+a[4]: address=0x60fe94	value=5
+</code>
+</pre>
+          <p>Но при этом имя массива это не стандартный указатель, и мы не можем изменить его адрес, например, так:</p>
+          <pre>
+<code>
+int a[5] = {1, 2, 3, 4, 5};
+a++;            // так сделать нельзя
+int b = 8;
+a = &b;         // так тоже сделать нельзя
+</code>
+</pre>
+          <h2>Указатели на массивы</h2>
+          <p>Имя массива всегда хранит адрес самого первого элемента. И нередко для перемещения по элементам массива
+            используются отдельные указатели:</p>
+          <pre>
+<code>
+int a[5] = {1, 2, 3, 4, 5};
+int *ptr = a;
+int a2 = *(ptr+2);
+std::cout <<  "value: " << a2 << std::endl;  // value: 3
+</code>
+</pre>
+          <p>Здесь указатель ptr изначально указывает на первый элемент массива. Увеличив указатель на 2, мы пропустим 2
+            элемента в массиве и перейдем к элементу a[2].</p>
+          <p>С помощью указателей легко перебрать массив:</p>
+          <pre>
+<code>
+int a[5] = {1, 2, 3, 4, 5};
+
+for(int *ptr=a; ptr<=&a[4]; ptr++)
+{
+    std::cout << "address=" << ptr << "\tvalue=" << *ptr << std::endl;
+}
+</code>
+</pre>
+          <p>Так как указатель хранит адрес, то мы можем продолжать цикл, пока адрес в указателе не станет равным адресу
+            последнего элемента.</p>
+          <p>Аналогичным образом можно перебрать и многомерный массив:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    int a[3][4] = { {1, 2, 3, 4} , {5, 6, 7, 8}, {9, 10, 11, 12}};
+    int n = sizeof(a)/sizeof(a[0]);         // число строк
+    int m = sizeof(a[0])/sizeof(a[0][0]);   // число столбцов
+      
+    int *end = a[0] + n * m - 1;    // указатель на самый последний элемент 0 + 3 * 4 - 1 = 11
+    for(int *ptr=a[0], i=1; ptr <= end; ptr++, i++)
+    {
+        std::cout << *ptr << "\t";
+        // если остаток от целочисленного деления равен 0,
+        // переходим на новую строку
+        if(i%m == 0)
+        {
+            std::cout << std::endl;
+        }
+    }
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Поскольку в данном случае мы имеем дело с двухмерным массивом, то адресом первого элемента будет выражение
+            a[0]. Соответственно указатель указывает на этот элемент. С каждой итерацией указатель увеличивается на
+            единицу, пока его значение не станет равным адресу последнего элемента, который хранится в указателе end.
+          </p>
+          <p>Мы также могли бы обойтись и без указателя на последний элемент, проверяя значение счетчика:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    int a[3][4] = { {1, 2, 3, 4} , {5, 6, 7, 8}, {9, 10, 11, 12}};
+    int n = sizeof(a)/sizeof(a[0]);         // число строк
+    int m = sizeof(a[0])/sizeof(a[0][0]);   // число столбцов
+      
+    int *end = a[0] + n * m - 1;    // указатель на самый последний элемент 0 + 3 * 4 - 1 = 11
+    for(int *ptr=a[0], i=0; i < m*n;)
+    {
+        std::cout << *ptr++ << "\t";
+        // если остаток от целочисленного деления равен 0,
+        // переходим на новую строку
+        if(++i%m == 0)
+        {
+            std::cout << std::endl;
+        }
+    }
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Но в обоих случаях программа вывела бы следующий результат:</p>
+          <pre>
+  <table>
+    <tbody>
+      <tr>
+        <td>1   </td>
+        <td>2   </td>
+        <td>3   </td>
+        <td>4   </td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>10</td>
+        <td>11</td>
+        <td>12</td>
+      </tr>
+    </tbody>
+  </table>
+</pre>
+          <h2>Указатель на массив символов</h2>
+          <p>Поскольку массив символов может интерпретироваться как строка, то указатель на значения типа char тоже
+            может интерпретироваться как строка:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    char letters[] = "hello";
+    char *p = letters;
+    std::cout << p << std::endl;        // hello
+    return 0;
+}
+</code>
+</pre>
+          <p>Если же необходимо вывести на консоль адрес указателя, то его надо переобразовать к типу void*:</p>
+          <pre><code>std::cout << (void*)p << std::endl; // 0x60fe8e</code></pre>
+          <p>В остальном работа с указателем на массив символов производится также, как и с указателями на массивы
+            других типов.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

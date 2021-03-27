@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Арифметика указателей</h1>
+          <p>Указатели могут участвовать в арифметических операциях (сложение, вычитание, инкремент, декремент). Однако
+            сами операции производятся немного иначе, чем с числами. И многое здесь зависит от типа указателя.</p>
+          <p>К указателю можно прибавлять целое число, и также можно вычитать из указателя целое число. Кроме того,
+            можно вычитать из одного указателя другой указатель.</p>
+          <p>Рассмотрим вначале операции инкремента и декремента и для этого возьмем указатель на объект типа
+            <strong>int</strong>:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    int n = 10;
+      
+    int *ptr = &n;
+    std::cout << "address=" << ptr << "\tvalue=" << *ptr << std::endl;
+      
+    ptr++;
+    std::cout << "address=" << ptr << "\tvalue=" << *ptr << std::endl;
+      
+    ptr--;
+    std::cout << "address=" << ptr << "\tvalue=" << *ptr << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Операция инкремента ++ увеличивает значение на единицу. В случае с указателем увеличение на единицу будет
+            означать увеличение адреса, который хранится в указателе, на размер типа указателя. То есть в данном случае
+            указатель на тип int, а размер объектов int в большинстве архитектур равен 4 байтам. Поэтому увеличение
+            указателя типа int на единицу означает увеличение значение указателя на 4.</p>
+          <p>И в моем случае консольный вывод выглядит следующим образом:</p>
+          <pre>
+<code>
+address=0x60fe98	value=10
+address=0x60fe9c	value=6356636
+address=0x60fe98	value=10
+</code>
+</pre>
+          <p>Здесь видно, что после инкремента значение указателя увеличилось на 4: с 0x60fe98 до 0x60fe9c. А после
+            декремента, то есть уменьшения на единицу, указатель получил предыдущий адрес в памяти.</p>
+          <p>Фактически увеличение на единицу означает, что мы хотим перейти к следующему объекту в памяти, который
+            находится за текущим и на который указывает указатель. А уменьшение на единицу означает переход назад к
+            предыдущему объекту в памяти.</p>
+          <p>После изменения адреса мы можем получить значение, которое находится по новому адресу, однако это значение
+            может быть неопределенным, как показано в случае выше.</p>
+          <p>В случае с указателем типа int увеличение/уменьшение на единицу означает изменение адреса на 4. Аналогично,
+            для указателя типа short эти операции изменяли бы адрес на 2, а для указателя типа <strong>char</strong> на
+            1.</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    double d = 10.6;
+    double *pd = &d;
+    std::cout << "Pointer pd: address:" << pd << std::endl;
+    pd++;
+    std::cout << "Pointer pd: address:" << pd << std::endl;
+          
+    char c = 'N';
+    char *pc = &c;
+    std::cout << "Pointer pc: address:" << (void*)pc << std::endl;
+    pc++;
+    std::cout << "Pointer pc: address:" << (void*)pc << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>В моем случае консольный вывод будет выглядеть следующим образом:</p>
+          <pre>
+<code>
+Pointer pd: address=0x60fe90
+Pointer pd: address=0x60fe98
+Pointer pc: address=0x60fe8f
+Pointer pc: address=0x60fe90
+</code>
+</pre>
+          <p>Как видно из консольного вывода, увеличение на единицу указателя типа double дало увеличения хранимого в
+            нем адреса на 8 единиц (размер объекта double - 8 байт), а увеличение на единицу указателя типа char дало
+            увеличение хранимого в нем адреса на 1 (размер типа char - 1 байт).</p>
+          <p>Аналогично указатель будет изменяться при прибавлении/вычитании не единицы, а какого-то другого числа.</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    double d = 10.6;
+    double *pd = &d;
+    std::cout << "Pointer pd: address:" << pd << std::endl;
+    pd = pd + 2;
+    std::cout << "Pointer pd: address:" << pd << std::endl;
+      
+    char c = 'N';
+    char *pc = &c;
+    std::cout << "Pointer pc: address:" << (void*)pc << std::endl;
+    pc = pc - 3;
+    std::cout << "Pointer pc: address:" << (void*)pc << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Добавление к указателю типа <strong>double</strong> числа 2</p>
+          <pre><code>pd = pd + 2;</code></pre>
+          <p>означает, что мы хотим перейти на два объекта double вперед, что подразумевает изменение адреса на 2 * 8 =
+            16 байт.</p>
+          <p>Вычитание из указателя типа <strong>char</strong> числа 3</p>
+          <pre><code>pc = pc - 3;</code></pre>
+          <p>означает, что мы хотим перейти на три объекта char назад, что подразумевает изменение адреса на 3 * 1 = 3
+            байта.</p>
+          <p>И в моем случае я получу следующий консольный вывод:</p>
+          <pre>
+<code>
+Pointer pd: address=0x60fe90
+Pointer pd: address=0x60fea0
+Pointer pc: address=0x60fe8f
+Pointer pc: address=0x60fe8c
+</code>
+</pre>
+          <p>В отличие от сложения операция вычитания может применять не только к указателю и целому числу, но и к двум
+            указателям одного типа:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    int a = 10;
+    int b = 23;
+    int *pa = &a;
+    int *pb = &b;
+    int c = pa - pb;
+      
+    std::cout << "pa: " << pa << std::endl;
+    std::cout << "pb: " << pb << std::endl;
+    std::cout << "c: " << c << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Консольный вывод в моем случае:</p>
+          <pre>
+<code>
+pa: 0x60fe90
+pb: 0x60fe8c
+c: 1
+</code>
+</pre>
+          <p>Результатом разности двух указателей является "расстояние" между ними. Например, в случае выше адрес из
+            первого указателя на 4 больше, чем адрес из второго указателя (0x60fe8c + 4 = 0x60fe90). Так как размер
+            одного объекта int равен 4 байтам, то расстояние между указателями будет равно (0x60fe90 - 0x60fe8c)/4 = 1.
+          </p>
+          <h2>Некоторые особенности операций</h2>
+          <p>При работе с указателями надо отличать операции с самим указателем и операции со значением по адресу, на
+            который указывает указатель.</p>
+          <pre>
+<code>
+int a = 10;
+int *pa = &a;
+int b = *pa + 20;   // операция со значением, на который указывает указатель
+pa++;               // операция с самим указателем
+      
+std::cout << "b: " << b << std::endl;  ;  // 30
+</code>
+</pre>
+          <p>То есть в данном случае через операцию разыменования *pa получаем значение, на которое указывает указатель
+            pa, то есть число 10, и выполняем операцию сложения. То есть в данном случае обычная операция сложения между
+            двумя числами, так как выражение *pa представляет число.</p>
+          <p>Но в то же время есть особенности, в частности, с операциями инкремента и декремента. Дело в том, что
+            операции *, ++ и -- имеют одинаковый приоритет и при размещении рядом выполняются справа налево.</p>
+          <p>Например, выполним постфиксный инкремент:</p>
+          <pre>
+<code>
+int a = 10;
+int *pa = &a;
+std::cout << "pa: address=" << pa << "\tvalue=" << *pa << std::endl;
+int b = *pa++;      // инкремент адреса указателя
+          
+std::cout << "b: value=" << b << std::endl;
+std::cout << "pa: address=" << pa << "\tvalue=" << *pa << std::endl;
+</code>
+</pre>
+          <p>В выражении b = *pa++; сначала к указателю присваивается единица (то есть к адресу добавляется 4, так как
+            указатель типа int). Затем так как инкремент постфиксный, с помощью операции разыменования возвращается
+            значение, которое было до инкремента - то есть число 10. И это число 10 присваивается переменной b. И в моем
+            случае результат работы будет следующий:</p>
+          <pre>
+<code>
+pa: address=0x60fe94	value=10
+b: value=10
+pa: address=0x60fe98	value=6356648
+</code>
+</pre>
+          <p>Изменим выражение:</p>
+          <pre><code>b = (*pa)++;</code></pre>
+          <p>Скобки изменяют порядок операций. Здесь сначала выполняется операция разыменования и получение значения,
+            затем это значение увеличивается на 1. Теперь по адресу в указателе находится число 11. И затем так как
+            инкремент постфиксный, переменная b получает значение, которое было до инкремента, то есть опять число 10.
+            Таким образом, в отличие от предыдущего случая все операции производятся над значением по адресу, который
+            хранит указатель, но не над самим указателем. И, следовательно, изменится результат работы:</p>
+          <pre>
+<code>
+pa: address=0x60fe94	value=10
+b: value=10
+pa: address=0x60fe94	value=11
+</code>
+</pre>
+          <p>Аналогично будет с префиксным инкрементом:</p>
+          <pre><code>b = ++*pa;</code></pre>
+          <p>В данном случае сначала с помощью операции разыменования получаем значение по адресу из указателя pa, к
+            этому значению прибавляется единица. То есть теперь значение по адресу, который хранится в указателе, равно
+            11. Затем результат операции присваивается переменной b:</p>
+          <pre>
+<code>
+pa: address=0x60fe94	value=10
+b: value=11
+pa: address=0x60fe94	value=11
+</code>
+</pre>
+          <p>Изменим выражение:</p>
+          <pre><code>b = *++pa;</code></pre>
+          <p>Теперь сначала изменяет адрес в указателе, затем мы получаем по этому адресу значение и присваиваем его
+            переменной b. Полученное значение в этом случае может быть неопределенным:</p>
+          <pre>
+<code>
+pa: address=0x60fe94	value=10
+b: value=6356864
+pa: address=0x60fe98	value=6356864
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

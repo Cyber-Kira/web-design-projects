@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Операции с указателями</h1>
+          <p>Указатели поддерживают ряд операций: присваивание, получение адреса указателя, получение значения по
+            указателю, некоторые арифметические операции и операции сравнения.</p>
+          <h2>Присваивание</h2>
+          <p>Указателю можно присвоить либо адрес объекта того же типа, либо значение другого указателя.</p>
+          <p>Присвоение указателю адреса уже рассматривалось в прошлой теме. Для получения адреса объекта используется
+            операция &:</p>
+          <pre>
+<code>
+int a = 10;
+int *pa = &a;   // указатель pa хранит адрес переменной a
+</code>
+</pre>
+          <p>При этом указатель и переменная должны иметь один и тот же тип, в данном случае это тип int.</p>
+          <p>Присвоение указателю другого указателя:</p>
+          <pre>
+<code>
+#include <iostream>
+using std::cout;
+using std::endl;
+  
+int main()
+{
+    int a = 10;
+    int b = 2;
+      
+    int *pa = &a;
+    int *pb = &b;
+      
+    cout << "Variable a: address=" << pa << "\t value=" << *pa << endl;
+    cout << "Variable b: address=" << pb << "\t value=" << *pb << endl;
+      
+    pa = pb;    // теперь указатель pa хранит адрес переменной b
+    cout << "Variable b: address=" << pa << "\t value=" << *pa << endl;
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Когда указателю присваивается другой указатель, то фактически первый указатель начинает также указывать на
+            тот же адрес, на который указывает второй указатель.</p>
+          <h2>Нулевые указатели</h2>
+          <p>Нулевой указатель (null pointer) - это указатель, который не указывает ни на какой объект. Если мы не
+            хотим, чтобы указатель указывал на какой-то конкретный адрес, то можно присвоить ему условное нулевое
+            значение. Для создания нулевого указателя можно применять различные способы:</p>
+          <pre>
+<code>
+int *p1 = nullptr;
+int *p2 = NULL;
+int *p3 = 0;
+</code>
+</pre>
+          <h2>Ссылки на указатели</h2>
+          <p>Так как ссылка не является объектом, то нельзя определить указатель на ссылку, однако можно определить
+            ссылку на указатель. Через подобную ссылку можно изменять значение, на которое указывает указатель или
+            изменять адрес самого указателя:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    int a = 10;
+    int b = 6;
+      
+    int *p = 0;     // указатель
+    int *&pRef = p;     // ссылка на указатель
+    pRef = &a;          // через ссылку указателю p присваивается адрес переменной a
+    std::cout << "p value=" << *p << std::endl;   // 10
+    *pRef = 70;         // изменяем значение по адресу, на который указывает указатель
+    std::cout << "a value=" << a << std::endl;    // 70
+      
+    pRef = &b;          // изменяем адрес, на который указывает указатель
+    std::cout << "p value=" << *p << std::endl;   // 6
+      
+    return 0;
+}
+</code>
+</pre>
+          <h2>Разыменование указателя</h2>
+          <p>Операция разыменования указателя представляет выражение в виде *имя_указателя. Эта операция позволяет
+            получить объект по адресу, который хранится в указателе.</p>
+          <pre>
+<code>
+#include <iostream>
+using std::cout;
+using std::endl;
+  
+int main()
+{
+    int a = 10;
+      
+    int *pa = &a;
+    int *pb = pa;
+      
+    *pa = 25;
+      
+    cout << "Value on pointer pa: " << *pa << endl;  // 25
+    cout << "Value on pointer pb: " << *pb << endl;  // 25
+    cout << "Value of variable a: " << a << endl;    // 25
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Через выражение *pa мы можем получить значение по адресу, который хранится в указателе pa, а через
+            выражение типа *pa = значение вложить по этому адресу новое значение.</p>
+          <p>И так как в данном случае указатель pa указывает на переменную a, то при изменении значения по адресу, на
+            который указывает указатель, также изменится и значение переменной a.</p>
+          <h2>Адрес указателя</h2>
+          <p>Указатель хранит адрес переменной, и по этому адресу мы можем получить значение этой переменной. Но кроме
+            того, указатель, как и любая переменная, сам имеет адрес, по которому он располагается в памяти. Этот адрес
+            можно получить также через операцию <strong>&</strong>:</p>
+          <pre>
+<code>
+int a = 10;
+int *pa = &a;
+std::cout << "address of pointer=" << &pa << std::endl;        // адрес указателя
+std::cout << "address stored in pointer=" << pa << std::endl;  // адрес, который хранится в указателе - адрес переменной a         
+std::cout << "value on pointer=" << *pa << std::endl;          // значение по адресу в указателе - значение переменной a
+</code>
+</pre>
+          <h2>Операции сравнения</h2>
+          <p>К указателям могут применяться операции сравнения <code>>, >=, <, <=,==, !=</code>. Операции сравнения
+                применяются только к указателям одного типа и к значениям NULL и <strong>nullptr</strong>. Для сравнения
+                используются номера адресов:</p>
+          <pre>
+<code>
+#include <iostream>
+using std::cout;
+using std::endl;
+  
+int main()
+{
+    int a = 10;
+    int b = 20;
+    int *pa = &a;
+    int *pb = &b;
+      
+    if(pa > pb)
+        cout << "pa (" << pa << ") is greater than pb ("<< pb << ")" << endl;
+    else
+        cout << "pa (" << pa << ") is less or equal pb ("<< pb << ")" << endl;
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Консольный вывод в моем случае:</p>
+          <pre><code>pa (0x60fe94) is greater than pb (0x60fe90)</code></pre>
+          <h2>Приведение типов</h2>
+          <p>Иногда требуется присвоить указателю одного типа значение указателя другого типа. В этом случае следует
+            выполнить операцию приведения типов с помощью операции (тип_указателя *):</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    char c = 'N';
+    char *pc = &c;
+    int *pd = (int *)pc;
+    void *pv = (void*)pc;
+    std::cout << "pv=" << pv << std::endl;
+    std::cout << "pd=" << pd << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Для преобразования указателя к другому типу в скобках перед указателем ставится тип, к которому надо
+            преобразовать. Причем если мы не можем просто создать объект, например, переменную типа void, то для
+            указателя это вполне будет работать. То есть можно создать указатель типа void.</p>
+          <p>Кроме того, следует отметить, что указатель на тип char (char *pc = &c) при выводе на консоль система
+            интерпретирует как строку:</p>
+          <pre><code>std::cout << "pc=" << pc << std::endl;</code></pre>
+          <p>Поэтому если мы все-таки хотим вывести на консоль адрес, который хранится в указателе типа char, то это
+            указатель надо преобразовать к другому типу, например, к void* или к int*.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
