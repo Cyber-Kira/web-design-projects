@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Параметры функции</h1>
+          <p>Через параметры в функцию можно передать различеые значения. Параметры перечисляются в скобках после имени
+            функции имеют следующее определение:</p>
+          <pre><code>тип название_параметра</code></pre>
+          <p>Например, определим программу обменного пункта:</p>
+          <pre>
+<code>
+#include <iostream>
+
+void exchange(double, double);
+  
+int main()
+{
+    double rate = 58;
+    double sum = 5000;
+    exchange(rate, sum);
+    exchange(60, 5000);
+    return 0;
+}
+  
+void exchange(double currate, double sum)
+{
+    double result = sum / currate;
+    std::cout <<  "Rate: " << currate << "\tSum: " << sum 
+            << "\tResult: " << result << std::endl;
+}
+</code>
+</pre>
+          <p>При запуске программы мы получим следующий консольный вывод:</p>
+          <pre>
+<code>
+Rate: 58 Sum: 5000	  Result: 86.2069
+Rate: 60 Sum: 5000	  Result: 83.3333
+</code>
+</pre>
+          <p>Функция exchange принимает два параметра типа double, которые называются currate (текущий курс) и sum
+            (сумма, которую надо обменять).</p>
+          <p>При вызове функции exchange для этих параметров необходимо передать значения. Значения, передаваемые
+            параметрам функции при ее вызове, называются аргументами. В данном случае в качестве аргументов передаются
+            обычные числа. При этом аргументы передаются по позиции, то есть первый аргумент передается перому
+            параметру, второй аргумент - второму параметру и так далее. При этом аргументы должны соответствовать
+            параметрам по типу или допускать неявно преобразование в тип параметра.</p>
+          <p>Рассмотрим еще один пример с функциями:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+  
+void square(int);
+void display(std::string, int);
+  
+int main()
+{
+    display("Tom", 33);
+    square(4.56);
+  
+    return 0;
+}
+void square(int x)
+{
+    std::cout << "Square of " << x << " is equal to " << x * x << std::endl;
+}
+  
+void display(std::string name, int age)
+{
+    std::cout << "Name: " << name << "\tAge: " << age << std::endl;
+}
+</code>
+</pre>
+          <p>Функция display принимает параметры типов string и int. При вызове этой функции в нее вначале передается
+            строка ("Tom"), так как параметр типа string идет первым, а потом число (33), так как параметр типа int идет
+            вторым: display("Tom", 33)</p>
+          <p>Функция square принимает число и выводит на консоль его квадрат. Параметр функции представляет тип int,
+            однако при ее вызове ей передается число с плавающей точкой, то есть значение типа double. Поэтому
+            производится преобразование от типа double к типу int, дробная часть отбрасывается, и в итоге функция
+            получает число 4.</p>
+          <h2>Аргументы по умолчанию</h2>
+          <p>Функция может принимать аргументы по умолчанию, то есть некоторые значения, которые функция использует,
+            если при вызове для параметров явным образом не передается значение:</p>
+          <pre>
+<code>
+#include <iostream>
+
+void multiply(int n, int m = 3)
+{
+    int result = n * m;
+    std::cout << "n * m = " << result << std::endl;
+}
+int main()
+{
+    multiply(4, 5);
+    multiply(4);
+    return 0;
+}
+</code>
+</pre>
+          <p>Для установки значения по умолчанию параметру присваивается это значение int m = 3. И если для второго
+            параметра не будет передано значение, то он будет использовать значение по умолчанию. Консольный вывод
+            программы:</p>
+          <pre>
+<code>
+n * m = 20
+n * m = 12
+</code>
+</pre>
+          <p>При объявлении прототипа подобной функции он тоже может содержать значение по умолчанию для параметра. И в
+            этом случае мы можем не определять в функции значение по умолчанию для параметра - оно будет браться из
+            прототипа:</p>
+          <pre>
+<code>
+#include <iostream>
+
+void multiply(int n, int m=3);
+  
+int main()
+{
+    multiply(4, 5);
+    multiply(4);
+    return 0;
+}
+  
+void multiply(int n, int m)
+{
+    int result = n * m;
+    std::cout << "n * m = " << result << std::endl;
+}
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
