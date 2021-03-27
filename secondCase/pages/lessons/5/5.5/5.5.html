@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Дружественные функции и классы</h1>
+          <p>Дружественные функции - это функции, которые не являются членами класса, однако имеют доступ к его закрытым
+            членам - переменным и функциям, которые имеют спецификатор private.</p>
+          <p>Для определения дружественных функций используется ключевое слово <strong>friend</strong>. Например,
+            определим следующую программу:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>  
+  
+class Auto
+{
+    friend void drive(Auto &);
+    friend void setPrice(Auto &, int price);
+public:
+    Auto(std::string autoName, int autoPrice) 
+    { 
+        name = autoName; 
+        price = autoPrice;
+    }
+    std::string getName(){ return name; }
+    int getPrice() { return price; }
+  
+private:
+    std::string name;   // название автомобиля
+    int price;  // цена автомобиля
+};
+  
+void drive(Auto &a) 
+{ 
+    std::cout << a.name << " is driven" << std::endl;
+}
+void setPrice(Auto &a, int price)
+{
+    if (price > 0) 
+        a.price = price;
+}
+  
+int main()
+{
+    Auto tesla("Tesla", 5000);
+    drive(tesla);
+    std::cout << tesla.getName() << " : " << tesla.getPrice() << std::endl;
+    setPrice(tesla, 8000);
+    std::cout << tesla.getName() << " : " << tesla.getPrice() << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Здесь определен класс Auto, который представляет автомобиль. У этого класса определены приватные закрытые
+            переменные name (название автомобиля) и price (цена автомобиля). Также в классе объявлены две дружественные
+            функции: drive (функция вождения автомобиля) и setPrice (функция назначения цены). Обе этих функции
+            принимают в качестве параметра ссылку на объект Auto.</p>
+          <p>Когда мы объявляем дружественные функции, то фактически мы говорим компилятору, что это друзья класса и они
+            имеют доступ ко всем членам этого класса, в том числе закрытым.</p>
+          <p>При этом для дружественных функций не важно, определяются они под спецификатором public или private. Для
+            них это не имеет значения.</p>
+          <p>Определение этих функций производится вне класса. И поскольку эти функции являются дружественными, то
+            внутри этих функций мы можем через переданную ссылку Auto обратиться ко всем его закрытым переменным.</p>
+          <p>Консольный вывод программы:</p>
+          <pre>
+<code>
+Tesla is driven
+Tesla : 5000
+Tesla : 8000
+</code>
+</pre>
+          <h2>Определение дружественных функций в классе</h2>
+          <p>Дружественные функции могут определяться в другом классе. Например, определим класс Person, который
+            использует объект Auto:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string> 
+  
+class Auto;
+  
+class Person
+{
+public:
+    Person(std::string n)
+    {
+        name = n;
+    }
+    void drive(Auto &a);
+    void setPrice(Auto &a, int price);
+  
+private:
+    std::string name;
+};
+  
+class Auto
+{
+    friend void Person::drive(Auto &);
+    friend void Person::setPrice(Auto &, int price);
+public:
+    Auto(std::string autoName, int autoPrice)
+    {
+        name = autoName;
+        price = autoPrice;
+    }
+    std::string getName() { return name; }
+    int getPrice() { return price; }
+  
+private:
+    std::string name;   // название автомобиля
+    int price;  // цена автомобиля
+};
+  
+void Person::drive(Auto &a)
+{
+    std::cout << name << " drives " << a.name << std::endl;
+}
+void Person::setPrice(Auto &a, int price)
+{
+    if (price > 0)
+        a.price = price;
+}
+  
+int main()
+{
+    Auto tesla("Tesla", 5000);
+    Person tom("Tom");
+    tom.drive(tesla);
+    tom.setPrice(tesla, 8000);
+    std::cout << tesla.getName() << " : " << tesla.getPrice() << std::endl;
+  
+    return 0;
+}
+    
+</code>
+</pre>
+          <p>Вначале определен класс Person, который представляет человека. Однако поскольку класс Person использует
+            класс Auto, то перед классом Person идет объявление класса Auto.</p>
+          <p>Две функции из класса Person принимают ссылку на объект Auto:</p>
+          <pre>
+<code>
+void drive(Auto &a);
+void setPrice(Auto &a, int price);
+</code>
+</pre>
+          <p>То есть фигурально говоря, человек водит автомобиль и назначает ему цену с помощью этих функциий.</p>
+          <p>Класс Auto определяет дружественные функции с той же сигнатурой:</p>
+          <pre>
+<code>
+friend void Person::drive(Auto &);
+friend void Person::setPrice(Auto &, int price);
+</code>
+</pre>
+          <p>Причем поскольку данные функции будут определены в классе Person, то названия этих функций предваряется
+            префиксом "Person::".</p>
+          <p>И поскольку в этих функциях предполагается использовать объект Auto, то ко времени определения этих функций
+            все члены объекта Auto должны быть известны, поэтому определения функций находятся не в самом классе Person,
+            а после класса Auto. И так как эти функции определены в классе Auto как дружественные, мы можем обратиться в
+            этих функциях к закрытым членам класса Auto.</p>
+          <p>Консольный вывод программы:</p>
+          <pre>
+<code>
+Tom drives Tesla
+Tesla : 8000
+</code>
+</pre>
+          <h2>Дружественные классы</h2>
+          <p>В случае выше класс Person использует только две функции из класса Auto. Но допустим впоследствии возникла
+            необходимость добавить в класс Auto еще ряд дружественных функций, которые будут определены в классе Person.
+            Либо мы можем предполагать, что класс Person будет активно использовать объекты Auto. И в этом случае
+            целесообразно определять не отдельные дружественные функции, а определить дружественным весь класс Person:
+          </p>
+          <pre>
+<code>
+#include <iostream>
+#include <string> 
+  
+class Auto;
+  
+class Person
+{
+public:
+    Person(std::string n)
+    {
+        name = n;
+    }
+    void drive(Auto &a);
+    void setPrice(Auto &a, int price);
+  
+private:
+    std::string name;
+};
+  
+class Auto
+{
+    friend class Person;
+public:
+    Auto(std::string autoName, int autoPrice)
+    {
+        name = autoName;
+        price = autoPrice;
+    }
+    std::string getName() { return name; }
+    int getPrice() { return price; }
+  
+private:
+    std::string name;   // название автомобиля
+    int price;  // цена автомобиля
+};
+  
+void Person::drive(Auto &a)
+{
+    std::cout << name << " drives " << a.name << std::endl;
+}
+void Person::setPrice(Auto &a, int price)
+{
+    if (price > 0)
+        a.price = price;
+}
+  
+int main()
+{
+    Auto tesla("Tesla", 5000);
+    Person tom("Tom");
+    tom.drive(tesla);
+    tom.setPrice(tesla, 8000);
+    std::cout << tesla.getName() << " : " << tesla.getPrice() << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Единственно, что в данном случае изменилось по сравнению с предыдущим примером это то, что в классе Auto
+            определение дружественных функций было заменено определением дружественного класса:</p>
+          <pre><code>friend class Person;</code></pre>
+          <p>То есть тем самым мы опять же говорим, что класс Person - это друг класса Auto, поэтому объекты Person
+            могут обращаться к приватным переменным класса Auto. После этого в классе Person можно обращаться к закрытым
+            членам класса Auto из любых функций.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

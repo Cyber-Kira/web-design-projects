@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Конструкторы и инициализация объектов</h1>
+          <p>В прошлой теме был разработан следующий класс:</p>
+          <pre>
+<code>
+class Person
+{
+public:
+    string name;
+    int age;
+    void move() {
+        cout << name << " is moving"<< endl;
+    }
+};
+</code>
+</pre>
+          <p>И мы можем установить значения для переменных класса Person, можем получить их значения во внешние
+            переменные. Однако если мы попробуем получить значения переменных name и age до их установки, то результаты
+            будут неопределенными:</p>
+          <pre>
+<code>
+Person person;
+cout << "Name: " << person.name << "\tAge: " << person.age << endl;
+</code>
+</pre>
+          <p>Чтобы избежать подобной ситуации применяются специальные функции инициализации или конструкторы. Они
+            позволяют инициализировать объект класса. Так, изменим код программы следующим образом:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+using std::string;
+using std::cout;
+using std::endl;
+  
+class Person
+{
+public:
+    string name;
+    int age;
+    Person(string n, int a) 
+    {
+        name = n; age = a;
+    }
+    void move() 
+    {
+        cout << name << " is moving" << endl;
+    }
+};
+int main()
+{
+    Person person = Person("Tom", 22);
+    cout << "Name: " << person.name << "\tAge: " << person.age << endl;
+    person.name = "Bob";
+    person.move();
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Теперь в классе Person определен конструктор:</p>
+          <pre>
+<code>
+Person(string n, int a) 
+{
+    name = n; age = a;
+}
+</code>
+</pre>
+          <p>По сути конструктор представляет функцию, которая может принимать параметры и которая должна называться по
+            имени класса. В данном случае конструктор принимает два параметра и передает их значения полям name и age.
+          </p>
+          <p>Если в классе определены конструкторы, то при создании объекта этого класса необходимо вызвать один из его
+            конструкторов.</p>
+          <p>Вызов конструктора получает значения для параметров и возвращает объект класса:</p>
+          <pre><code>Person person = Person("Tom", 22);</code></pre>
+          <p>После этого вызова у объекта person для поля name будет определено значение "Tom", а для поля age -
+            значение 22. Вполедствии мы также сможем обращаться к этим полям и переустанавливать их значения.</p>
+          <p>Тажке можно использовать сокращенную форму инициализации:</p>
+          <pre><code>Person person("Tom", 22);</code></pre>
+          <p>По сути она будет эквивалетна предыдущей.</p>
+          <p>Консольный вывод определенной выше программы:</p>
+          <pre>
+<code>
+Name: Tom	Age: 22
+Bob is moving
+</code>
+</pre>
+          <p>Подобным образом мы можем определить несколько конструкторов и затем их использовать:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+using std::string;
+using std::cout;
+using std::endl;
+  
+class Person
+{
+public:
+    string name;
+    int age;
+    Person(string n, int a) 
+    {
+        name = n; 
+        age = a;
+    }
+    Person(string n)
+    {
+        name = n; 
+        age = 18;
+    }
+    Person()
+    {
+        name = "Bob"; 
+        age = 18;
+    }
+    void move() 
+    {
+        cout << name << " is moving" << endl;
+    }
+};
+int main()
+{
+    Person tom("Tom", 22);
+    cout << "Name: " << tom.name << "\tAge: " << tom.age << endl;
+    Person sam("Sam");
+    cout << "Name: " << sam.name << "\tAge: " << sam.age << endl;
+    Person bob = Person();
+    cout << "Name: " << bob.name << "\tAge: " << bob.age << endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>В классе Person определено три конструктора, и в функции все эти конструкторы используются для создания
+            объектов:</p>
+          <pre>
+<code>
+Name: Tom	  Age: 22
+Name: Sam	  Age: 18
+Name: Bob	  Age: 18
+</code>
+</pre>
+          <p>Хотя пример выше прекрасно работает, однако мы можем заметить, что все три конструктора выполняют
+            фактически одни и те же действия - устанавливают значения переменных name и age. И в C++ можем сократить их
+            определения, вызова из одного конструктора другой и тем самым уменьшить объем кода:</p>
+          <pre>
+<code>
+class Person
+{
+public:
+    string name;
+    int age;
+    Person(string n, int a)
+    {
+        name = n; age = a;
+        cout << "First constructor" << endl;
+    }
+    Person(string n): Person(n, 18) // вызов первого конструктора
+    {
+        cout << "Second constructor" << endl;
+    }
+    Person() : Person("Bob")    // вызов второго конструктора
+    {
+        cout << "Third constructor" << endl;
+    }
+    void move()
+    {
+        cout << name << " is moving" << endl;
+    }
+};
+</code>
+</pre>
+          <p>Запись Person(string n): Person(n, 18) представляет вызов конструктора, которому передается значение
+            параметра n и число 18. То есть второй конструктор делегирует действия по инициализации переменных первому
+            конструктору. При этом второй конструктор может дополнительно определять какие-то свои действия.</p>
+          <p>Таким образом, следующее создание объекта</p>
+          <pre><code>Person bob = Person();</code></pre>
+          <p>будет использовать третий конструктор, который в свою очередь вызывает второй конструктор, а тот обращается
+            к первому конструктору.</p>
+          <h2>Инициализация констант и ссылок</h2>
+          <p>В теле конструктора мы можем передать значения переменным класса. Однако константы и ссылки требуют особого
+            отношения. Например, вначале определим следующий класс:</p>
+          <pre>
+<code>
+class Person
+{
+public:
+    const string name;
+    int &ageRef;
+    int age;
+    Person(string n, int a)
+    {
+        name = n; age = a; ageRef = age;
+    }
+    Person(string n)
+    {
+        name = n; age = 18; ageRef = age;
+    }
+    void move()
+    {
+        cout << name << " is moving" << endl;
+    }
+};
+</code>
+</pre>
+          <p>Этот класс не будет компилироваться, так как здесь есть две ошибки - отсутствие инициализации константы
+            name и ссылки ageRef. Хотяя их значения устанавливаются в конструкторе, но к моменту, когда код инструкции
+            из тела конструктора начнут выполняться, константы и ссылки уже должны быть инициализированы. И для этого
+            необходимо использовать списки инициализации:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+using std::string;
+using std::cout;
+using std::endl;
+  
+class Person
+{
+public:
+    const string name;
+    int &ageRef;
+    int age;
+    Person(string n, int a) : name(n), age(a), ageRef(age)
+    {
+    }
+    Person(string n) : name(n), age(18), ageRef(age)
+    {
+    }
+    void move()
+    {
+        cout << name << " is moving" << endl;
+    }
+};
+int main()
+{
+    Person tom("Tom", 22);
+    cout << "Name: " << tom.name << "\tAge: " << tom.age << "\t AgeRef: " << tom.ageRef << endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Списки инициализации представляют перечисления инициализаторов для каждой из переменных и констант через
+            двоеточие после списка параметров конструктора:</p>
+          <pre>
+<code>
+Person(string n, int a) : name(n), age(a), ageRef(age)
+{
+}
+</code>
+</pre>
+          <p>Таким образом, все переменные, константы и ссылки получат значение, и никакой ошибки не возникнет.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

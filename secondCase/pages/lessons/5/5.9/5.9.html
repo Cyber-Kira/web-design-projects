@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Перечисления</h1>
+          <p>Перечисления (enum) представляют еще один способ определения своих типов. Их отличительной особенностью
+            является то, что они содержат набор числовых констант.</p>
+          <p>Определим простейшее перечисление:</p>
+          <pre>
+<code>
+enum seasons
+{
+    spring,
+    summer,
+    autumn,
+    winter
+};
+</code>
+</pre>
+          <p>Для определения перечисления применяется ключевое слово enum, после которого идет название перечисления.
+            Затем в фигурных скобках идет перечисление констант через запятую. Каждой константе по умолчанию будет
+            присваиваться числовое значение начиная с нуля. То есть в данном случае spring=0, a winter=3.</p>
+          <p>Используем перечисление:</p>
+          <pre>
+<code>
+#include <iostream>
+enum seasons
+{
+    spring,
+    summer,
+    autumn,
+    winter
+};
+int main()
+{
+    seasons currentSeason = autumn;
+    // или так
+    // seasons currentSeason = seasons::autumn;
+    std::cout << "Season: " << currentSeason << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Мы можем определить переменную типа seasons и присвоить этой переменной значение одной из констант,
+            объявленных в перечислении. Но фактически это будет числовое значение. В частности, консольный вывод данной
+            программы:</p>
+          <pre><code>Season: 2</code></pre>
+          <p>В то же время перечисления - это отдельный тип, поэтому мы не можем присвоить переменной напрямую числовое
+            значение:</p>
+          <pre><code>seasons currentSeason = 2;  // ошибка</code></pre>
+          <p>Если нас не устраивают значения по умолчанию для констант, то мы можем явным образом задать значения.
+            Например, установить начальное значение:</p>
+          <pre>
+<code>
+enum seasons
+{
+    spring = 1,
+    summer, //2
+    autumn, //3
+    winter  //4
+};
+</code>
+</pre>
+          <p>В этом случае значения второй и последующих констант будет увеличиваться на единицу.</p>
+          <p>Также можно задать значение для каждой константы:</p>
+          <pre>
+<code>
+enum seasons
+{
+    spring = 1,
+    summer = 2,
+    autumn = 4,
+    winter = 8
+};
+</code>
+</pre>
+          <p>Когда необходимы перечисления? Перечисления могут использоваться, когда у нас есть ряд логически связанных
+            констант, которые естественно лучше определить в одном общем типе данных. Например:</p>
+          <pre>
+<code>
+#include <iostream>
+enum operations
+{
+    add = 1,
+    subtract = 2,
+    multiply = 4
+};
+int main()
+{
+    int operation;
+    int x1;
+    int x2;
+    int result;
+  
+    std::cout << "Add: 1 \tSubtract: 2 \tMultiply: 4" << std::endl;
+    std::cout << "Input x1: ";
+    std::cin >> x1;
+    std::cout << "Input x2: ";
+    std::cin >> x2;
+    std::cout << "Input operation number: ";
+    std::cin >> operation;
+  
+    switch (operation)
+    {
+    case operations::add: 
+        result = x1 + x2;
+        break;
+    case operations::subtract:
+        result = x1 - x2;
+        break;
+    case operations::multiply:
+        result = x1 * x2;
+        break;
+    }
+  
+    std::cout << "Result: " << result << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>В данном случае все арифметические операции хранятся в перечислении operations. В зависимости от выбранной
+            операции в конструкции switch производятся определенные действия.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h2>Абстрактные классы</h2>
+          <p>Иногда возникает необходимость определить класс, который не предполагает создаия конкретных объектов.
+            Например, класс фигуры. В реальности есть конкретные фигуры: квадрат, прямоугольник, треугольник, круг и так
+            далее. Однако абстрактной фигуры самой по себе не существует. В то же время может потребоваться определить
+            для всех фигур какой-то общий класс, который будет содержать общую для всех функциональность. И для описания
+            подобных сущностей используются абстрактные классы.</p>
+          <p>Абстрактные классы - это классы, которые содержат или наследуют без переопределения хотя бы одну чистую
+            виртуальную функцию. Абстрактный класс определяет интерфейс для переопределения производными классами.</p>
+          <p>Что такое чистые виртуальные функции (pure virtual functions)? Это функции, которые не имеют определения.
+            Чтобы определить виртуальную функцию как чистую, ее объявление завершается значением "=0". Например,
+            определим абстрактный класс, который представляет геометрическую фигуру:</p>
+          <pre>
+<code>
+class Figure
+{
+public:
+    virtual double getSquare() = 0;
+    virtual double getPerimeter() = 0;
+    virtual void showFigureType() = 0;
+};
+</code>
+</pre>
+          <p>Класс Figure является абтрактным, потому он содержит как минимум одну чистую виртуальную функцию. А в
+            данном случае даже три таких функции. И ни одна из функций не имеет никакой реализации. Реализацию должны
+            определять классы-наследники.</p>
+          <p>При этом мы не можем создать объект абстрактного класса:</p>
+          <pre><code>Figure figure;</code></pre>
+          <p>Определим следующую программу:</p>
+          <pre>
+<code>
+#include <iostream>
+
+class Figure
+{
+public:
+    virtual double getSquare() =0;
+    virtual double getPerimeter() =0;
+    virtual void showFigureType()=0;
+};
+class Rectangle : public Figure
+{
+private:
+    double width;
+    double height;
+public:
+    Rectangle(double w, double h) : width(w), height(h)
+    {
+    }
+    double getSquare() override
+    {
+        return width * height;
+    }
+    double getPerimeter() override
+    {
+        return width * 2 + height * 2;
+    }
+    void showFigureType()
+    {
+        std::cout << "Rectangle" << std::endl;
+    }
+};
+class Circle : public Figure
+{
+private:
+    double radius;
+public:
+    Circle(double r) : radius(r)
+    {
+    }
+    double getSquare() override
+    {
+        return radius * radius * 3.14;
+    }
+    double getPerimeter() override
+    {
+        return 2 * 3.14 * radius;
+    }
+    void showFigureType()
+    {
+        std::cout << "Circle" << std::endl;
+    }
+};
+  
+int main()
+{
+    Rectangle rect(30, 50);
+    Circle circle(30);
+      
+    std::cout << "Rectangle square: " << rect.getSquare() << std::endl;
+    std::cout << "Circle square: " << circle.getSquare() << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Здесь определены два класса-наследника от абстрактного класса Figure - Rectangle (прямоугольник) и Circle
+            (круг). При создании классов-наследников все они должны либо определить для чстых виртуальных функций
+            конкретную реализацию, либо повторить объявление чистой виртуальной функции. Во втором случае производные
+            классы также будут абстрактными.</p>
+          <p>В данном же случае и Circle, и Rectangle являются конкретными классами и реализуют все виртуальные функции.
+          </p>
+          <p>Консольный вывод программы:</p>
+          <pre>
+<code>
+Rectangle square: 1500
+Circle square: 2826
+</code>
+</pre>
+          <p>Стоит отметить, что абстрактный класс может определять и обычные функции и переменные, может иметь
+            несколько конструкторов, но при этом нельзя создавать объекты этого абстрактного класса.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

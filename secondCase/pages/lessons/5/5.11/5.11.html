@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Виртуальные функции и их переопределение</h1>
+          <p>В прошлой теме были определены следующие классы Person и Employee:</p>
+          <pre>\
+<code>
+class Person
+{
+public:
+  Person(std::string n, int a)
+  {
+      name = n; age = a;
+  }
+  void display()
+  {
+      std::cout << "Name: " << name << "\tAge: " << age << std::endl;
+  }
+protected:
+  std::string name;
+private:
+  int age;
+};
+class Employee : public Person
+{
+public:
+  Employee(std::string n, int a, std::string c):Person(n, a)
+  {
+      company = c;
+  }
+private:
+  std::string company;
+};
+</code>
+</pre>
+          <p>Класс Employee наследует функцию display и может использовать ее для вывода информации о сотруднике. Однако
+            реализация этой функции в классе Person выводит на консоль только имя и возраст. Тогда как в классе Employee
+            определена дополнительная переменная - company, которая хранит компанию, в которой работает объект Employee.
+            И было бы хорошо, если бы для объекта Employee функция display также выводила бы значения переменной
+            company.</p>
+          <p>Мы можем решить эту проблему с помощью виртуальных функций. То есть чтобы в производном классе можно было
+            бы переопределить функцию, в базовом классе подобная функция должна быть объявлена с ключевым словом
+            <strong>virtual</strong>:</p>
+          <pre>
+<code>
+class Person
+{
+public:
+    Person(std::string n, int a)
+    {
+        name = n; age = a;
+    }
+    virtual void display()
+    {
+        std::cout << "Name: " << name << "\tAge: " << age << std::endl;
+    }
+private:
+    std::string name;
+    int age;
+};
+</code>
+</pre>
+          <p>Теперь функция display может быть переопределена в производных классах. Причем производный класс может и не
+            переопределять функцию, а использовать унаследованный функционал.</p>
+          <p>Для переопределения виртуальной функции в производном классе она должна быть определена с ключевым словом
+            override, которое помещается после списка параметров функции:</p>
+          <pre>
+<code>
+class Employee : public Person
+{
+public:
+    Employee(std::string n, int a, std::string c):Person(n, a)
+    {
+        company = c;
+    }
+    void display() override
+    {
+        std::cout << "Name:" << name << "\tCompany: " << company << std::endl;
+    }
+private:
+    std::string company;
+};
+</code>
+</pre>
+          <p>Класс, который определяет или наследует виртуальную функцию, еще назвается <strong>полиморфным</strong>
+            (polymorphic class). То есть в данном случае Person и Employee являются полиморфными классами.</p>
+          <p>При переопределении виртуальных функций следует учитывать, что переопределенная версия функции в
+            производном классе должна иметь тот же набор параметров и возвращать объект того же типа, что и виртуальная
+            функция в базовом классе.</p>
+          <h2>Обращение к базовому классу</h2>
+          <p>Теперь в классе Employee функция display выводит имя и компанию сотрудника. Однако функция display в классе
+            Person выводит еще и возраст человека. Но поскольку переменная age в классе Person определена как закрытая,
+            то класс Employee не имеет к ней доступа.</p>
+          <p>Мы могли бы в данном случае определить переменную age как защищенную, то есть со спецификатором protected,
+            однако есть и другой способ - мы можем просто обратиться к реализации функции базового класса. Применим
+            данный способ:</p>
+          <pre>
+<code>
+class Employee : public Person
+{
+public:
+    Employee(std::string n, int a, std::string c):Person(n, a)
+    {
+        company = c;
+    }
+    void display() override
+    {
+        Person::display();
+        std::cout << "Company: " << company << std::endl;
+    }
+private:
+    std::string company;
+};
+</code>
+</pre>
+          <p>С помощью вызова Person::display(); будет выполняться реализация функции display из класса Person, которая
+            выведет на консоль имя и возраст. Соответственно нам остается только определить код для вывода компании.
+            Причем таким образом мы можем обращаться к любому функционалу базового класса за исключением приватных
+            переменных и функций.</p>
+          <p>Применим классы в программе:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+  
+class Person
+{
+public:
+    Person(std::string n, int a)
+    {
+        name = n; age = a;
+    }
+    virtual void display()
+    {
+        std::cout << "Name: " << name << "\tAge: " << age << std::endl;
+    }
+protected:
+    std::string name;
+private:
+    int age;
+};
+class Employee : public Person
+{
+public:
+    Employee(std::string n, int a, std::string c):Person(n, a)
+    {
+        company = c;
+    }
+    void display() override
+    {
+        Person::display();
+        std::cout << "Company: " << company << std::endl;
+    }
+private:
+    std::string company;
+};
+  
+int main()
+{
+    Person tom("Tom", 23);
+    tom.display();
+    Employee bob("Bob", 31, "Microsoft");
+    bob.display();
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Консольный вывод программы:</p>
+          <pre>
+<code>
+Name: Tom	Age: 23
+Name: Bob	Age: 31
+Company: Microsoft
+</code>
+</pre>
+          <p>Также мы можем вызывать реализацию из базового класса через переменную производного класса:</p>
+          <pre>
+<code>
+Employee bob("Bob", 31, "Microsoft");
+bob.Person::display();
+</code>
+</pre>
+          <h2>Сокрытие функций</h2>
+          <pre>
+<code>
+class Employee : public Person
+{
+public:
+    Employee(std::string n, int a, std::string c) :Person(n, a)
+    {
+        company = c;
+    }
+    void display()
+    {
+        std::cout << company << std::endl;
+    }
+private:
+    std::string company;
+};
+</code>
+</pre>
+          <p>В данном случае функция display представляет совершенно новую реализацию, которая не имеет ничего общего с
+            базовым классом Person. Она скрывает по сути виртуальную функцию из базового класса.</p>
+          <p>Нередко подобные функции являются результатом невнимательности - хотели переопределить функцию базового
+            класса, но забыли поставить спецификатор override. В то же время ошибки в данном случае не будет. И мы также
+            сможем использовать данную функцию:</p>
+          <pre>
+<code>
+Employee bob("Bob", 31, "Microsoft");
+bob.display();
+</code>
+</pre>
+          <h2>Запрет переопределения</h2>
+          <p>С помощью спецификатора <strong>final</strong> мы можем запретить определение в производных классах
+            функций, которые имеют то же самое имя, возвращаемый тип и список параметров, что и виртуальная функция в
+            базовом классе. Например:</p>
+          <pre>
+<code>
+class Person
+{
+public:
+    virtual void display() final
+    {
+          
+    }
+};
+class Employee : public Person
+{
+public:
+    void display()      // Ошибка!!!
+    {
+          
+    }
+};
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

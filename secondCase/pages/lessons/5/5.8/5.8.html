@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Структуры</h1>
+          <p>Ранее для определения классов мы использовали ключевое слово class. Однако C++ предоставляет еще один
+            способ для определения пользовательских типов, который заключается в использовании структур. Данный способ
+            был унаследован языком С++ еще от языка Си.</p>
+          <p>Структура в языке C++ представляет собой производный тип данных, который представляет какую-то определенную
+            сущность, также как и класс. Нередко структуры применителько к С++ также называют классами. И в реальности
+            различия между ними не такие большие.</p>
+          <p>Для определения структуры применяется ключевое слово <strong>struct</strong>, а сам формат определения
+            выглядит следующим образом:</p>
+          <pre>
+<code>
+struct имя_структуры
+{
+    компоненты_структуры
+};
+</code>
+</pre>
+          <p>Имя_структуры представляет произвольный идентификатор, к которому применяются те же правила, что и при
+            наименовании переменных.</p>
+          <p>После имени структуры в фигурных скобках помещаются Компоненты_структуры, которые представляют набор
+            описаний объектов и функций, которые составляют структуру.</p>
+          <p>Например, определим простейшую структуру:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+  
+struct person
+{
+    int age;
+    std::string name;
+};
+  
+int main()
+{
+    person tom;
+    tom.name = "Tom";
+    tom.age = 34;
+    std::cout << "Name: " << tom.name << "\tAge: " << tom.age << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Здесь определена структура person, которая имеет два элемента: age (представляет тип int) и name
+            (представляет тип string).</p>
+          <p>После определения структуры мы можем ее использовать. Для начала мы можем определить объект структуры - по
+            сути обычную переменную, которая будет представлять выше созданный тип. Также после создания переменной
+            структуры можно обращаться к ее элементам - получать их значения или, наоборот, присваивать им новые
+            значения. Для обращения к элементам структуры используется операция "точка":</p>
+          <pre><code>имя_переменной_структуры.имя_элемента</code></pre>
+          <p>По сути структура похожа на класс, то есть с помощью структур также можно определять сущности для
+            использования в программе. В то же время все члены структуры, для которых не используется спецификатор
+            доступа (public, private), по умолчанию являются открытыми (public). Тогда как в классе все его члены, для
+            которых не указан спецификатор доступа, являются закрытыми (private).</p>
+          <p>Кроме того мы можем инициализировать структуру, присвоив ее переменным значения с помощью синтаксиса
+            инициализации:</p>
+          <pre><code>person tom = { 34, "Tom" };</code></pre>
+          <p>Инициализация структур аналогична инициализации массивов: в фигурных скобках передаются значения для
+            элементов структуры по порядку. Так как в структуре person первым определено свойство, которое представляет
+            тип int - число, то в фигурных скобках вначале идет число. И так далее для всех элементов структуры по
+            порядку.</p>
+          <p>При этом любой класс мы можем представить в виде структуры и наоборот. Возьмем, к примеру, следующий класс:
+          </p>
+          <pre>
+<code>
+class Person
+{
+public:
+    Person(std::string n, int a)
+    {
+        name = n; age = a;
+    }
+    void move()
+    {
+        std::cout << name << " is moving" << std::endl;
+    }
+    void setAge(int a)
+    {
+        if (a > 0 && a < 100) age = a;
+    }
+    std::string getName()
+    {
+        return name;
+    }
+    int getAge()
+    {
+        return age;
+    }
+private:
+    std::string name;
+    int age;
+  
+};
+</code>
+</pre>
+          <p>Данный класс определяет сущность человека и содержит ряд приватных и публичных переменных и функции. Вместо
+            класса для определения той же сущности мы могли бы использовать структуру:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+  
+struct user
+{
+public:
+    user(std::string n, int a)
+    {
+        name = n; age = a;
+    }
+    void move()
+    {
+        std::cout << name << " is moving" << std::endl;
+    }
+    void setAge(int a)
+    {
+        if (a > 0 && a < 100) age = a;
+    }
+    std::string getName()
+    {
+        return name;
+    }
+    int getAge()
+    {
+        return age;
+    }
+private:
+    std::string name;
+    int age;
+  
+};
+  
+int main()
+{
+    user tom("Tom", 22);
+    std::cout << "Name: " << tom.getName() << "\tAge: " << tom.getAge() << std::endl;
+    tom.setAge(31);
+    std::cout << "Name: " << tom.getName() << "\tAge: " << tom.getAge() << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>И в плане конечного результата программы мы не увидели бы никакой разницы.</p>
+          <p>Когда использовать структуры? Как правило, структуры используются для описания таких данных, которые имеют
+            только набор публичных атрибутов - открытых переменных. Например, как та же структура person, которая была
+            определена в начале статьи. Иногда подобные сущности еще называют <strong>аггрегатными классами</strong>
+            <div class="main__pagination">
+              <div class="paginator previous"><a href="./lab1.html">
+                  <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                  Лабораторная №1</a></div>
+              <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+              </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
