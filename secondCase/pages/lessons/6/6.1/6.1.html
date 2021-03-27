@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Обработка исключений</h1>
+          <p>В процессе работы программы могут возникать различные ошибки. Например, при передаче файла по сети
+            оборвется сетевое подключение или будут введены некорректные и недопустимые данные, которые вызовут падение
+            программы. Такие ошибки еще называются исключениями. Если исключение не обработано, то при его возникновении
+            программа прекращает свою работу.</p>
+          <p>Например, в следующей программе происходит деление чисел:</p>
+          <pre>
+<code>
+#include <iostream>
+
+double divide(int, int);
+  
+int main()
+{
+    int x = 500;
+    int y = 0;
+    double z = divide(x, y);
+  
+    std::cout << z << std::endl;
+    std::cout << "The End..." << std::endl;
+    return 0;
+}
+  
+double divide(int a, int b)
+{
+    return a / b;
+}
+</code>
+</pre>
+          <p>Эта программа успешно скомпилируется, но при ее выполнении возникнет ошибка, поскольку в коде производится
+            деление на ноль, после чего программа аварийно завершится.</p>
+          <p>С одной стороны, мы можем в функции divide определить проверку и выполнять деление, если параметр b не
+            равен 0. Однако нам в любом случае надо возвращать из функции divide некоторый результат - некоторое число.
+            То есть мы не можем просто написать:</p>
+          <pre>
+<code>
+double divide(int a, int b)
+{
+    if (b != 0)
+        return a / b;
+    else
+        std::cout << "Error! b must not be equal to 0" << std::endl;
+}
+</code>
+</pre>
+          <p>И в этом случае нам надо известить систему о возникшей ошибке. Для этого используется оператор
+            <strong>throw</strong>.</p>
+          <p>Оператор <strong>throw</strong> генерирует исключение. Через оператор throw можно передать информацию об
+            ошибке. Например, функция divide могла бы выглядеть следующим образом:</p>
+          <pre>
+<code>
+double divide(int a, int b)
+{
+    if (b == 0)
+        throw "Division by zero!";
+    return a / b;
+}
+</code>
+</pre>
+          <p>То есть если параметр b равен 0, то генерируем исключение.</p>
+          <p>Но это исключение еще надо обработать в коде, где будет вызываться функция divide. Для обработки исключений
+            применяется конструкция try...catch. Она имеет следующую форму:</p>
+          <pre>
+<code>
+try
+{
+    инструкции, которые могут вызвать исключение
+}
+catch(объявление_исключения)
+{
+    обработка исключения
+}
+</code>
+</pre>
+          <p>В блок после ключевого слова <strong>try</strong> помещается код, который потенциально может сгенерировать
+            исключение.</p>
+          <p>После ключевого слова <strong>catch</strong> в скобках идет параметр, который передает информацию об
+            исключении. Затем в блоке производится собственно обработка исключения.</p>
+          <p>Так изменим весь код следующим образом:</p>
+          <pre>
+<code>
+#include <iostream>
+
+double divide(int, int);
+  
+int main()
+{
+    int x = 500;
+    int y = 0;
+    try
+    {
+        double z = divide(x, y);
+        std::cout << z << std::endl;
+    }
+    catch (...)
+    {
+        std::cout << "Error!" << std::endl;
+    }
+    std::cout << "The End..." << std::endl;
+    return 0;
+}
+  
+double divide(int a, int b)
+{
+    if (b == 0)
+        throw "Division by zero!";
+    return a / b;
+}
+</code>
+</pre>
+          <p>Код, который потенциально может сгенерировать исключение - вызов функции divide помещается в блок try.</p>
+          <p>В блоке catch идет обработка исключения. Причем многоточие в скобках после оператора catch (catch(...))
+            позволяет обработать любое исключение.</p>
+          <p>В итоге когда выполнение программы дойдет до строки double z = divide(x, y);, будет сгенерировано
+            исключение, поэтому последующие инструкции из блока try выполняться не будут, а управление перейдет в блок
+            catch, в котором на консоль просто выводится сообщение об ошибке. После выполнения блока catch программа
+            аварийно не завершится, а продолжит свою работу, выполняя операторы после бллока catch:</p>
+          <pre>
+<code>
+Error!
+The End...
+</code>
+</pre>
+          <p>Чтобы скомпилировать данный пример с конструкцией try...catch с помощью g++ может потребоваться
+            использование флага -static:</p>
+          <pre><code>g++ app.cpp -o app -static</code></pre>
+          <p>Однако в данном случае мы только знаем, что произошла какая-то ошибка, а какая именно, неизвестно. Поэтому
+            в выражении catch мы можем получить то сообщение, которое передается оператору throw:</p>
+          <pre>
+<code>
+int main()
+{
+    int x = 500;
+    int y = 0;
+    try
+    {
+        double z = divide(x, y);
+        std::cout << z << std::endl;
+    }
+    catch (const char* msg)
+    {
+        std::cout << msg << std::endl;
+    }
+    std::cout << "The End..." << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>С помощью параметра const char* msg получаем сообщение, которое предано оператору throw, и выводит это
+            сообщение на консоль. И в этом случае консольный вывод будет выглядеть следующим образом:</p>
+          <pre>
+<code>
+Division by zero!
+The End...
+</code>
+</pre>
+          <p>Таким образом, мы можем узнать суть возникшего исключения.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
