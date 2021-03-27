@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm"></div>
+        <div class="col-sm-7">
+          <h1>Строки</h1>
+          <p>Для хранения строк в C++ применяется тип <strong>string</strong>. Для использования этого типа его
+            необходимо подключить в код с помощью директивы <strong>include</strong>:</p>
+          <pre>
+<code>
+#include <string>
+#include <iostream>
+  
+int main()
+{
+    std::string hello = "Hello World!";
+    std::cout << hello << "\n";
+    return 0;
+}
+</code>
+</pre>
+          <p>Тип string определен в стандартной библиотеке и при его использовании надо указывать пространство имен
+            <strong>std</strong>.</p>
+          <p>Либо можно использовать выражение using, чтобы не указывать префикс std:</p>
+          <pre><code>using std::string;</code></pre>
+          <p>В данном случае значение переменной hello, которая представляет тип string, выводится на консоль.</p>
+          <p>При компиляции через g++ может потребоваться указать флаг -static. То есть если код определен в файл
+            hello.cpp, то команда на компиляцию для g++ может выглядеть следующим образом:</p>
+          <pre><code>g++ hello.cpp -o hello -static</code></pre>
+          <p>Для инициализации строк можно использовать различные способы:</p>
+          <pre>
+<code>
+#include <string>
+#include <iostream>
+  
+int main()
+{
+    std::string s1;                 // пустая строка
+    std::string s2 = "hello";       // hello
+    std::string s3("welcome");      // welcome
+    std::string s4(5, 'h');     // hhhhh
+    std::string s5 = s2;            // hello
+      
+    std::cout << s1 << "\n";
+    std::cout << s2 << "\n";
+    std::cout << s3 << "\n";
+    std::cout << s4 << "\n";
+    std::cout << s5 << "\n";
+    return 0;
+}
+</code>
+</pre>
+          <p>Консольный вывод данной программы:</p>
+          <pre>
+<code>
+
+hello
+welcome
+hhhhh
+hello
+</code>
+</pre>
+          <p>Если при определении переменной типа string мы не присваиваем ей никакого значения, то по умолчанию данная
+            переменная содержит пустую строку:</p>
+          <pre><code>std::string s1;</code></pre>
+          <p>Также можно инициализировать переменную строчным литералом, который заключается в двойные кавычки:</p>
+          <pre><code>std::string s2 = "hello";</code></pre>
+          <p>В качестве альтернативы можно передавать строку в скобках после определения переменной:</p>
+          <pre><code>std::string s3("welcome");</code></pre>
+          <p>Если необходимо, чтобы строка содержала определенное количесто определеных символов, то можно указать в
+            скобках количество символов и сам символ:</p>
+          <pre><code>std::string s4(5, 'h');</code></pre>
+          <p>И также можно передать переменной копию другой строки:</p>
+          <pre><code>std::string s5 = s2;</code></pre>
+          <h2>Конкатенация строк</h2>
+          <p>Над строками можно выполнять ряд операций. В частности, можно объединять строки с помощью стандартной
+            операции сложения:</p>
+          <pre>
+<code>
+#include <iostream>
+using std::cout;
+using std::endl;
+using std::string;
+  
+int main()
+{   
+    string s1 = "hello";
+    string s2 = "world";
+    string s3 = s1 + " " + s2; // hello world
+    cout << s3 << endl;
+    return 0;
+}
+</code>
+</pre>
+          <h2>Сравнение строк</h2>
+          <p>К строкам можно применять операции сравнения. Оператор == возвращает true, если все символы обеих строк
+            равны.</p>
+          <pre>
+<code>
+std::string s1 = "hello";
+std::string s2 = "world";
+  
+bool result = s1 == s2;     // false
+result = s1 == "Hello";     // false
+result = s1 == "hello";     // true
+</code>
+</pre>
+          <p>При этом символы должны совпадать в том числе по регистру.</p>
+          <p>Операция != возвращает true, если две строки не совпадают.</p>
+          <pre>
+<code>
+std::string s1 = "hello";
+std::string s2 = "world";
+  
+bool result = s1 != s2;     // true
+result = s1 != "Hello";     // true
+result = s1 != "hello";     // false
+</code>
+</pre>
+          <p>Остальные базовые операции сравнения <, <=,>, >= сравнивают строки в зависимости от регистра и алфавитного
+              порядка символов. Например, строка "b" условно больше строки "a", так как символ b по алфавиту идет после
+              символа a. А строка "a" больше строки "A". Если первые символы строки равны, то сравниваются последующие
+              символы:</p>
+          <pre>
+<code>
+std::string s1 = "Aport";
+std::string s2 = "Apricot";
+bool result = s1 > s2;       // false
+</code>
+</pre>
+          <p>В данном случае условие s1 > s2 ложно, то есть s2 больше чем s1, так как при равенстве первых двух символов
+            ("Ap") третий символ второй строки ("o") стоит в алфавите до третьего символа второй строки ("p"), то есть
+            "o" меньше чем "p".</p>
+          <h2>Размер строки</h2>
+          <p>С помощью метода <strong>size()</strong> можно узнать размер строки, то есть из скольких символов она
+            состоит:</p>
+          <pre>
+<code>
+std::string s1 = "hello";
+std::cout << s1.size() << std::endl;    // 5
+</code>
+</pre>
+          <p>Если строка пустая, то она содержит 0 символов. В этом случае мы можем применить метод empty() - он
+            возвращает true, если строка пустая:</p>
+          <pre>
+<code>
+std::string s1 = "";
+if(s1.empty())
+    std::cout << "String is empty" << std::endl;
+</code>
+</pre>
+          <h2>Чтение строки с консоли</h2>
+          <p>Для считывания введенной строки с консоли можно использовать объект std::cin:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+  
+int main()
+{   
+    std::string name;
+    std::cout << "Input your name: ";
+    std::cin >> name;
+    std::cout << "Your name: " << name << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Консольный вывод:</p>
+          <pre>
+<code>
+Input your name: Tom
+Your name: Tom
+</code>
+</pre>
+          <p>Однако если при данном способе ввода строка будет содержать подстроки, разделенные пробелом, то std::cin
+            будет использовать только первую подстроку:</p>
+          <pre>
+<code>
+Input your name: Tom Smith
+Your name: Tom
+</code>
+</pre>
+          <p>Чтобы считать всю строку, применяется метод <strong>getline()</strong>:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <string>
+  
+int main()
+{   
+    std::string name;
+    std::cout << "Input your name: ";
+    getline(std::cin, name);
+    std::cout << "Your name: " << name << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Метод getline принимает два объекта - std::cin и переменную, в которую надо считать строку.</p>
+          <p>Консольный вывод:</p>
+          <pre>
+<code>
+Input your name: Tom Smith
+Your name: Tom Smith
+</code>
+</pre>
+          <h2>Получение и изменение символов строки</h2>
+          <p>Подобно массиву мы можем обращаться с помощью индексов к отдельным символам строки, получать и изменять их:
+          </p>
+          <pre>
+<code>
+std::string hello = "Hello";
+char c = hello[1];      // e
+hello[0]='M';
+std::cout << hello << std::endl;    // Mello
+</code>
+</pre>
+          <h2>Символьные массивы</h2>
+          <p>Массив символов, последний элемент которого представляет нулевой символ '\0', может использоваться как
+            строка:</p>
+          <pre>
+<code>
+#include <iostream>
+
+int main()
+{
+    char letters[] = {'h', 'e', 'l', 'l', 'o', '\0'};
+    std::cout << letters << std::endl;
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>Данный код выведет на консоль строку "hello". Подобное определение массива строк будет также эквивалентно
+            следующему:</p>
+          <pre><code>char letters[] = "hello";</code></pre>
+          <p>Однако подобное использование массива строк унаследовано от языка Си, а при написании программ на С++ при
+            работе со строками следует отдавать предпочтение встроенному типу string, а не массиву символов.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
