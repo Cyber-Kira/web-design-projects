@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Операции с векторами</h1>
+          <h2>Добавление элементов в вектор</h2>
+          <p>Для добавления элементов в вектор применяется функция push_back(), в который передается добавляемый
+            элемент:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <vector>
+  
+int main()
+{
+    std::vector<int> numbers;     // пустой вектор
+    numbers.push_back(5);
+    numbers.push_back(3);
+    numbers.push_back(10);
+    for(int n : numbers)
+        cout << n << "\t";      // 5    3   10
+      
+    std::cout << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Векторы являются динамическими структурами в отличие от массивов, где мы скованы его заданым размером.
+            Поэтому мы можем динамически добавлять в вектор новые данные.</p>
+          <p>Функция <strong>emplace_back()</strong> выполняет аналогичную задачу - добавляет элемент в конец
+            контейнера:</p>
+          <pre>
+<code>
+std::vector<int> numbers1 = { 1, 2, 3, 4, 5 };
+numbers1.emplace_back(8);   // numbers1 = { 1, 2, 3, 4, 5, 8 };
+</code>
+</pre>
+          <h2>Добавление элементов на определенную позицию</h2>
+          <p>Ряд функций позволяет добавлять элементы на определенную позицию.</p>
+          <ul>
+            <li><strong>emplace(pos, value)</strong>: вставляет элемент value на позицию, на которую указывает итератор
+              pos</li>
+            <li><strong>insert(pos, value)</strong>: вставляет элемент value на позицию, на которую указывает итератор
+              pos, аналогично функции emplace</li>
+            <li><strong>insert(pos, n, value)</strong>: вставляет n элементов value начиная с позиции, на которую
+              указывает итератор pos</li>
+            <li><strong>insert(pos, begin, end)</strong>: вставляет начиная с позиции, на которую указывает итератор
+              pos, элементы из другого контейнера из диапазона между итераторами begin и end</li>
+            <li><strong>insert(pos, values)</strong>: вставляет список значений начиная с позиции, на которую указывает
+              итератор pos</li>
+          </ul>
+          <p>Функция emplace:</p>
+          <pre>
+<code>
+std::vector<int> numbers = { 1, 2, 3, 4, 5 };
+auto iter = numbers.cbegin();   // константный итератор указывает на первый элемент
+numbers.emplace(iter + 2, 8); // добавляем после второго элемента  numbers = { 1, 2, 8, 3, 4, 5};
+</code>
+</pre>
+          <p>Функция insert:</p>
+          <pre>
+<code>
+std::vector<int> numbers1 = { 1, 2, 3, 4, 5 };
+auto iter1 = numbers1.cbegin(); // константный итератор указывает на первый элемент
+numbers1.insert(iter1 + 2, 8); // добавляем после второго элемента  
+//numbers1 = { 1, 2, 8, 3, 4, 5};
+  
+std::vector<int> numbers2 = { 1, 2, 3, 4, 5 };
+auto iter2 = numbers2.cbegin(); // константный итератор указывает на первый элемент
+numbers2.insert(iter2 + 1, 3, 4); // добавляем после первого элемента три четверки  
+//numbers2 = { 1, 4, 4, 4, 2, 3, 4, 5};
+  
+std::vector<int> values = { 10, 20, 30, 40, 50 };
+std::vector<int> numbers3 = { 1, 2, 3, 4, 5 };
+auto iter3 = numbers3.cbegin(); // константный итератор указывает на первый элемент
+// добавляем после первого элемента три первых элемента из вектора values
+numbers3.insert(iter3 + 1, values.begin(), values.begin() + 3);
+//numbers3 = { 1, 10, 20, 30, 2, 3, 4, 5};
+  
+std::vector<int> numbers4 = { 1, 2, 3, 4, 5 };
+auto iter4 = numbers4.cend();   // константный итератор указывает на позицию за последним элементом
+// добавляем в конец вектора numbers4 элементы из списка { 21, 22, 23 }
+numbers4.insert(iter4, { 21, 22, 23 });
+//numbers4 = { 1, 2, 3, 4, 5, 21, 22, 23};
+</code>
+</pre>
+          <h2>Удаление элементов</h2>
+          <p>Если необходимо удалить все элементы вектора, то можно использовать функцию <strong>clear</strong>:</p>
+          <pre>
+<code>
+std::vector<int> v = { 1,2,3,4 };
+v.clear();
+</code>
+</pre>
+          <p>Функция <strong>pop_back()</strong> удаляет последний элемент вектора:</p>
+          <pre>
+<code>
+std::vector<int> v = { 1,2,3,4 };
+v.pop_back();       // v = { 1,2,3 }
+</code>
+</pre>
+          <p>Если нужно удалить элемент из середины или начала контейнера, применяется функция <strong>erase()</strong>,
+            которая имеет следующие формы:</p>
+          <ul>
+            <li><strong>erase(p)</strong>: удаляет элемент, на который указывает итератор p. Возвращает итератор на
+              элемент, следующий после удаленного, или на конец контейнера, если удален последний элемент</li>
+            <li><strong>erase(begin, end)</strong>: удаляет элементы из диапазона, на начало и конец которого указывают
+              итераторы begin и end. Возвращает итератор на элемент, следующий после последнего удаленного, или на конец
+              контейнера, если удален последний элемент</li>
+          </ul>
+          <p>Применение функции:</p>
+          <pre>
+<code>
+std::vector<int> numbers1 = { 1, 2, 3, 4, 5, 6 };
+auto iter = numbers1.cbegin(); // указатель на первый элемент
+numbers1.erase(iter + 2);   // удаляем третий элемент
+// numbers1 = { 1, 2, 4, 5, 6 }
+  
+std::vector<int> numbers2 = { 1, 2, 3, 4, 5, 6 };
+auto begin = numbers2.cbegin(); // указатель на первый элемент
+auto end = numbers2.cend();     // указатель на последний элемент
+numbers2.erase(begin + 2, end - 1); // удаляем с третьего элемента до последнего
+// numbers2 = {1, 2, 6}
+</code>
+</pre>
+          <h2>Размер вектора</h2>
+          <p>С помощью функции <strong>size()</strong> можно узнать размер вектора, а с помощью функции
+            <strong>empty()</strong> проверить, путой ли вектор</p>
+          <pre>
+<code>
+#include <iostream>
+#include <vector>
+using std::vector;
+using std::cout;
+using std::endl;
+  
+int main()
+{
+    vector<int> numbers = {1, 2, 3};
+    if(numbers.empty())
+        cout << "Vector is empty" << endl;
+    else
+        cout << "Vector has size " << numbers.size() << endl;
+      
+    return 0;
+}
+</code>
+</pre>
+          <p>С помощью функции <strong>resize()</strong> можно изменить размер вектора. Эта функция имеет две формы:</p>
+          <ul>
+            <li><strong>resize(n)</strong>: оставляет в векторе n первых элементов. Если вектор содержит больше
+              элементов, то его размер усекается до n элементов. Если размер вектора меньше n, то добавляются
+              недостающие элементы и инициализируются значением по умолчанию</li>
+            <li><strong>resize(n, value)</strong>: также оставляет в векторе n первых элементов. Если размер вектора
+              меньше n, то добавляются недостающие элементы со значением value</li>
+          </ul>
+          <p>Применение функции:</p>
+          <pre>
+<code>
+std::vector<int> numbers1 = { 1, 2, 3, 4, 5, 6 };
+numbers1.resize(4); // оставляем первые четыре элемента - numbers1 = {1, 2, 3, 4}
+  
+numbers1.resize(6, 8);   // numbers1 = {1, 2, 3, 4, 8, 8}
+</code>
+</pre>
+          <p>Важно учитывать, что применение функции resize может сделать некорректными все итераторы, указатели и
+            ссылки на элементы.</p>
+          <h2>Изменение элементов вектора</h2>
+          <p>Функция <strong>assign()</strong> позволяет заменить все элементы вектора определенным набором:</p>
+          <pre>
+<code>
+std::vector<std::string> names = { "Tom", "Bob", "Kate"};
+names.assign(4, "Sam"); // numbers = {"Sam", "Sam", "Sam", "Sam"}
+</code>
+</pre>
+          <p>В данном случае элементы вектора заменяются набором из четырех строк "Sam".</p>
+          <p>Еще одна функция - <strong>swap()</strong> обменивает значения двух контейнеров:</p>
+          <pre>
+<code>
+std::vector<std::string> clangs = { "C++", "C#", "Java" };
+std::vector<std::string> ilangs = { "JavaScript", "Python", "PHP"};
+clangs.swap(ilangs);    // clangs = { "JavaScript", "Python", "PHP"};
+for(std::string n : clangs)
+    std::cout << n << "\t";
+std::cout << std::endl;
+</code>
+</pre>
+          <h2>Сравнение векторов</h2>
+          <p>Векторы можно сравнивать. Сравнение контейнеров осуществляется на основании сравнения пар элементов на тех
+            же позициях. Векторы равны, если они содержат одинаковые элементы на тех же позициях. Иначе они не равны:
+          </p>
+          <pre>
+<code>
+std::vector<int> v1 = {1, 2, 3};
+std::vector<int> v2 = {1, 2, 3};
+std::vector<int> v3 = {3, 2, 1};
+      
+bool v1v2 = v1 == v2;   // true
+bool v1v3 = v1 != v3;   // true
+bool v2v3 = v2 == v3;   // false
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

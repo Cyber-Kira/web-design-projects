@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Вектор</h1>
+          <p>Вектор представляет контейнер, который содержит коллекцию объектов одного типа. Для работы с векторами
+            необходимо включить заголовок:</p>
+          <pre><code>#include &lt;vector></code></pre>
+          <p>Определим простейший вектор:</p>
+          <pre><code>std::vector&lt;int> numbers;</code></pre>
+          <p>В угловых скобках указывается тип, объекты которого будут храниться в векторе. То есть вектор numbers
+            хранит объекты типа int. Однако такой вектор пуст. Он не содержит никаких элементов.</p>
+          <p>Но мы можем инициализировать вектор одним из следующих способов:</p>
+          <pre>
+<code>
+std::vector&lt;int> v1;                   // пустой вектор
+std::vector&lt;int> v2(v1);               // вектор v2 - копия вектора v1
+std::vector&lt;int> v3 = v1;              // вектор v3 - копия вектора v1
+std::vector&lt;int> v4(5);                // вектор v4 состоит из 5 чисел
+std::vector&lt;int> v5(5, 2);             // вектор v5 состоит из 5 чисел, каждое число равно 2
+std::vector&lt;int> v6{1, 2, 4, 5};       // вектор v6 состоит из чисел 1, 2, 4, 5
+std::vector&lt;int> v7 = {1, 2, 3, 5};    // вектор v7 состоит из чисел 1, 2, 4, 5
+</code>
+</pre>
+          <p>Важно понимать отличие в данном случае круглых скобок от фигурных:</p>
+          <pre>
+<code>
+std::vector&lt;int> v1(5);       // вектор состоит из 5 чисел, каждое число в векторе равно 0
+std::vector&lt;int> v2{5};       // вектор состоит из одного числа, которое равно 5
+std::vector&lt;int> v3(5, 2);    // вектор состоит из 5 чисел, каждое число равно 2
+std::vector&lt;int> v4{5, 2};    // вектор состоит из двух чисел 5 и 2
+</code>
+</pre>
+          <p>При этом можно хранить в векторе элементы только одного типа, который указан в угловых скобках. Значения
+            дугих типов в вектор сохранить нельзя, как например, в следующем случае:</p>
+          <pre><code>std::vector&lt;int> v{5, "hi"};</code></pre>
+          <h2>Обращение к элементам и их перебор</h2>
+          <p>Для обращения к элементам вектора можно использовать разные способы:</p>
+          <ul>
+            <li><strong>[index]</strong>: получение элемента по индексу (также как и в массивах), индексация начинается
+              с нуля</li>
+            <li><strong>at(index)</strong>: функция возращает элемент по индексу</li>
+            <li><strong>front()</strong>: возвращает первый элемент</li>
+            <li><strong>back()</strong>: возвращает последний элемент</li>
+          </ul>
+          <p>Выполним перебор вектора и получим некоторые его элементы:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <vector>
+  
+int main()
+{
+    std::vector<int> numbers= {1, 2, 3, 4, 5};
+      
+    int n1 = numbers.front();   // n1 = 1
+    int n2 = numbers.back();    // n2 = 5
+    int x = numbers[1]; // x = 2
+    numbers[0] = 6;
+      
+    for(int n : numbers)
+        cout << n << "\t";  // 6  2  3  4  5
+      
+    std::cout << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>При этом следует учитывать, что индексация не добавляет элементов. Например, если вектор содержит 5
+            элементов, то мы не можем обратиться к шестому элементу:</p>
+          <pre>
+<code>
+std::vector&lt;int> numbers= {1, 2, 3, 4, 5};
+numbers[5] = 9;
+</code>
+</pre>
+          <p>При таком обращении результат неопределен. Некоторые комиляторы могут генерировать ошибку, некоторые
+            продолжат работать, но даже в этом случае такое обращение будет ошибочно, и оно в любом случае не добавит в
+            вектор шестой элемент.</p>
+          <p>Чтобы избежать подобных ситуаций, можно использовать функцию <strong>at()</strong>, которая хотя также
+            возвращает элемент по индексу, но при попытке обращения по недопустимому индексу будет генерировать
+            исключение <strong>out_of_range</strong>:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <vector>
+#include <stdexcept>
+  
+int main()
+{
+    std::vector<int> numbers = { 1, 2, 3, 4, 5};
+    try
+    {
+        int n = numbers.at(8);
+    }
+    catch (std::out_of_range e)
+    {
+        std::cout << "Incorrect index" << std::endl;
+    }
+  
+    return 0;
+}
+</code>
+</pre>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>

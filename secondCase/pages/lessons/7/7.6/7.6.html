@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>List</h1>
+          <p>Контейнер list представляет двухсвязный список. Для его использования необходимо подключить заголовочный
+            файл list.</p>
+          <p>Создание списка:</p>
+          <pre>
+<code>
+std::list<int> list1;                   // пустой список
+std::list<int> list2(5);                // список list2 состоит из 5 чисел, каждый элемент имеет значение по умолчанию
+std::list<int> list3(5, 2);             // список list3 состоит из 5 чисел, каждое число равно 2
+std::list<int> list4{ 1, 2, 4, 5 };     // список list4 состоит из чисел 1, 2, 4, 5
+std::list<int> list5 = { 1, 2, 3, 5 };  // список list5 состоит из чисел 1, 2, 4, 5
+std::list<int> list6(list4);            // список list6 - копия списка list4
+std::list<int> list7 = list4;           // список list7 - копия списка list4
+</code>
+</pre>
+          <h2>Получение элементов</h2>
+          <p>В отличие от других контейнеров для типа list не определена операция обращения по индексу или функция at(),
+            которая выполняет похожую задачу.</p>
+          <p>Тем не менее для контейнера list можно использовать функции <strong>front()</strong> и
+            <strong>back()</strong>, которые возвращают соответственно первый и последний элементы.</p>
+          <p>Чтобы обратиться к элементам, которые находятся в середине (после первого и до последнего элементов),
+            придется выполнять перебор элементов с помощью циклов или итераторов:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <list>
+  
+int main()
+{
+    std::list<int> numbers = { 1, 2, 3, 4, 5 };
+  
+    int first = numbers.front();  // 1
+    int last = numbers.back();  // 5
+  
+    // перебор в цикле
+    for (int n : numbers)
+        std::cout << n << "\t";
+    std::cout << std::endl;
+  
+    // перебор с помощью итераторов
+    for (auto iter = numbers.begin(); iter != numbers.end(); iter++)
+    {
+        std::cout << *iter << "\t";
+    }
+    std::cout << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <h2>Размер списка</h2>
+          <p>Для получения размера списка можно использовать функцию <strong>size()</strong>:</p>
+          <pre>
+<code>
+std::list<int> numbers = { 1, 2, 3, 4, 5 };
+int size = numbers.size();   // 5
+</code>
+</pre>
+          <p>Функция empty() позволяет узнать, пуст ли список. Если он пуст, то функция возвращает значение true, иначе
+            возвращается значение false:</p>
+          <pre>
+<code>
+std::list<int> numbers = { 1, 2, 3, 4, 5 };
+if (numbers.empty())
+    std::cout << "The list is empty" << std::endl;
+else
+    std::cout << "The list is not empty" << std::endl;
+</code>
+</pre>
+          <p>С помощью функции resize() можно изменить размер списка. Эта функция имеет две формы:</p>
+          <ul>
+            <li>resize(n): оставляет в списке n первых элементов. Если список содержит больше элементов, то он усекается
+              до первых n элементов. Если размер списка меньше n, то добавляются недостающие элементы и инициализируются
+              значением по умолчанию</li>
+            <li>resize(n, value): также оставляет в списке n первых элементов. Если размер списка меньше n, то
+              добавляются недостающие элементы со значением value</li>
+          </ul>
+
+
+
+
+
+
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
