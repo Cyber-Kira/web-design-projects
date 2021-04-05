@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Базовые типы для работы с потоками</h1>
+          <p>Все инструменты для работы с системой ввода-вывода и потоками в языке С++ определены в стандартной
+            библиотеке. Заголовочный файл iostream определяет следующие базовые типы для работы с потоками:</p>
+          <ul>
+            <li><strong>istream</strong> и <strong>wistream</strong>: читают данные с потока</li>
+            <li><strong>ostream</strong> и <strong>wostream</strong>: записывают данные в поток</li>
+            <li><strong>iostream</strong> и <strong>wiostream</strong>: читают и записывают данные в поток</li>
+          </ul>
+          <p>Для каждого типа определен его двойник, который начинается на букву w и который предназначен для поддержки
+            данных типа wchar_t.</p>
+          <p>Эти типы являются базовыми для других классов, управляющих потоками ввода-вывода.</p>
+          <p>Объект типа <strong>ostream</strong> получает значения различных типов, преобразует их в последовательность
+            символов и передает их через буфер в определенное место для вывода (консоль, файл, сетевые интерфейсы и
+            т.д.)</p>
+          <img src="./1.png" alt="">
+          <p>Поток <strong>istream</strong> получает через буфер из определенного места последовательности символов (с
+            консоли, из файла, из сети и т.д.) и преобразует эти последовательности в значения различных типов. То есть
+            когда мы вводим данные (с той же клавиатуры в консоли), сначала данные накапливаются в буфере и только затем
+            передаются объекту istream.</p>
+          <img src="./2.png" alt="">
+          <p>По умолчанию в стандартной библиотеке определены объекты этих классов - <strong>cout</strong>,
+            <strong>cin</strong>, <strong>cerr</strong>, которые работают с консолью.</p>
+          <h2>Запись в поток</h2>
+          <p>Для записи данных в поток ostream применяется оператор <<. Этот оператор получает два операнда. Левый
+              операнд представляет объект типа ostream, а правый операнд - значение, которое надо вывести в поток.</p>
+              <p>К примеру, по умолчанию стандартная библиотека C++ предоставляет объект <strong>cout</strong>, который
+              представляет тип ostream и позволяет выводить данные на консоль:</p>
+          <pre>
+<code>
+#include &lt;iostream>
+
+int main()
+{
+    std::cout << "Hello" << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Так как оператор << возвращает левый операнд - cout, то с помощью цепочки операторов мы можем передать на
+              консоль несколько значений:</p> <pre><code>std::cout << "Hello" << " world" << std::endl;</code> </pre>
+                  <h2>Чтение данных</h2>
+                  <p>Для чтения данных из потока применяется оператор ввода >>, который принимает два операнда. Левый
+                    операнд представляет поток istream, с которого производится считывание, а правый операнд - объект, в
+                    который считываются данные.</p>
+                  <p>Для чтения с консоли применяется объект <strong>cin</strong>, который представляет тип istream.</p>
+                  <pre>
+<code>
+#include &lt;iostream>
+
+int main()
+{   
+    int age;
+    double weight;
+    std::cout << "Input age: ";
+    std::cin >> age;
+    std::cout << "Input weight: ";
+    std::cin >> weight;
+    std::cout << "Your age: " << age << "\t your weight: " << weight << std::endl;
+    return 0;
+}
+</code>
+</pre>
+                  <p>Однако такой способ не очень подходит для чтения строк с консоли особенно когда считываемая строка
+                    содержит пробельные символы. В этом случае лучше использовать встроенную функцию
+                    <strong>getline()</strong>, которая в качестве параметра принимает поток istream и переменную типа
+                    string, в которую надо считать данные:</p>
+                  <pre>
+<code>
+#include &lt;iostream>
+#include &lt;string>
+  
+int main()
+{
+    std::string name;
+    std::cout << "Input name: ";
+    getline(std::cin, name);
+    //std::cin >> name;
+    std::cout << "Your name: " << name &lt;&lt;std::endl;
+    return 0;
+}
+</code>
+</pre>
+                  <p>Консольный вывод данной программы:</p>
+                  <pre>
+<code>
+Input name: Tom Smit
+Your name: Tom Smit
+</code>
+</pre>
+                  <h2>Вывод ошибок</h2>
+                  <p>Для вывода сообщения об ошибке на консоль применяется объект cerr, который представляет объект типа
+                    ostream:</p>
+                  <pre>
+<code>
+#include &lt;iostream>
+
+int main()
+{
+    std::cerr << "Error occured" << std::endl;
+    return 0;
+}
+</code>
+</pre>
+                  <h2>Потоки символов wchar_t</h2>
+                  <p>Для работы с потоками данных типов wchar_t в стандартной библиотеке определены объекты wcout (тип
+                    wostream), wcerr (тип wostream) и wcin (тип wistream), которые являются аналогами для объектов cout,
+                    cerr и cin и работают аналогично</p>
+                  <pre>
+<code>
+#include &lt;iostream>
+
+int main()
+{
+    int age;
+    double weight;
+    std::wcout << "Input age: ";
+    std::wcin >> age;
+    std::wcout << "Input weight: ";
+    std::wcin >> weight;
+    if (age <= 0 || weight <= 0)
+        std::wcerr << "Invalid data" << std::endl;
+    else
+        std::wcout << "Your age: " << age << "\t your weight: " << weight << std::endl;
+    return 0;
+}
+</code>
+</pre>
+                  <div class="main__pagination">
+                    <div class="paginator previous"><a href="./lab1.html">
+                        <img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                        Лабораторная №1</a></div>
+                    <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+                    </div>
+                  </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
