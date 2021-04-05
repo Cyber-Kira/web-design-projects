@@ -113,12 +113,149 @@ else
             <li>resize(n, value): также оставляет в списке n первых элементов. Если размер списка меньше n, то
               добавляются недостающие элементы со значением value</li>
           </ul>
+          <p>Применение функции:</p>
+          <pre>
+<code>
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5, 6 };
+numbers.resize(4);  // оставляем первые четыре элемента - numbers = {1, 2, 3, 4}
+  
+numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
+</code>
+</pre>
+          <h2>Изменение элементов списка</h2>
+          <p>Функция <strong>assign()</strong> позволяет заменить все элементы списка определенным набором. Она имеет
+            следующие формы:</p>
+          <ul>
+            <li><strong>assign(il)</strong>: заменяет содержимое контейнера элементами из списка инициализации il</li>
+            <li><strong>assign(n, value)</strong>: заменяет содержимое контейнера n элементами, которые имеют значение
+              value</li>
+            <li><strong>assign(begin, end)</strong>: заменяет содержимое контейнера элементами из диапазона, на начало и
+              конец которого указывают итераторы begin и end</li>
+          </ul>
+          <p>Применение функции:</p>
+          <pre>
+<code>
+std::list<int> numbers = { 1, 2, 3, 4, 5 };
 
-
-
-
-
-
+numbers.assign({ 21, 22, 23, 24, 25 }); // numbers = { 21, 22, 23, 24, 25 }
+  
+numbers.assign(4, 3);       // numbers = {3, 3, 3, 3}
+  
+std::list<int> values = { 6, 7, 8, 9, 10, 11 };
+auto start = ++values.begin();  // итератор указывает на второй элемент из values
+auto end = values.end();
+numbers.assign(start, end); //  numbers = { 7, 8, 9, 10, 11 }
+</code>
+</pre>
+          <p>Функция swap() обменивает значениями два списка:</p>
+          <pre>
+<code>
+std::list<int> list1 = { 1, 2, 3, 4, 5 };
+std::list<int> list2 = { 6, 7, 8, 9};
+list1.swap(list2);
+// list1 = { 6, 7, 8, 9};
+// list2 = { 1, 2, 3, 4, 5 };
+</code>
+</pre>
+          <h2>Добавление элементов</h2>
+          <p>Для добавления элементов в контейнер list применяется ряд функций.</p>
+          <ul>
+            <li><strong>push_back(val)</strong>: добавляет значение val в конец списка</li>
+            <li><strong>push_front(val)</strong>: добавляет значение val в начало списка</li>
+            <li><strong>emplace_back(val)</strong>: добавляет значение val в конец списка</li>
+            <li><strong>emplace_front(val)</strong>: добавляет значение val в начало списка</li>
+            <li><strong>emplace(pos, val)</strong>: вставляет элемент val на позицию, на которую указывает итератор pos.
+              Возвращает итератор на добавленный элемент</li>
+            <li><strong>insert(pos, val)</strong>: вставляет элемент val на позицию, на которую указывает итератор pos,
+              аналогично функции emplace. Возвращает итератор на добавленный элемент</li>
+            <li><strong>insert(pos, n, val)</strong>: вставляет n элементов val начиная с позиции, на которую указывает
+              итератор pos. Возвращает итератор на первый добавленный элемент. Если n = 0, то возвращается итератор pos.
+            </li>
+            <li><strong>insert(pos, begin, end)</strong>: вставляет начиная с позиции, на которую указывает итератор
+              pos, элементы из другого контейнера из диапазона между итераторами begin и end. Возвращает итератор на
+              первый добавленный элемент. Если между итераторами begin и end нет элементов, то возвращается итератор
+              pos.</li>
+            <li><strong>insert(pos, values)</strong>: вставляет список значений values начиная с позиции, на которую
+              указывает итератор pos. Возвращает итератор на первый добавленный элемент. Если values не содержит
+              элементов, то возвращается итератор pos.</li>
+          </ul>
+          <p>Функции push_back(), push_front(), emplace_back() и emplace_front():</p>
+          <pre>
+<code>
+std::list<int> numbers = { 1, 2, 3, 4, 5 };
+numbers.push_back(23);  // { 1, 2, 3, 4, 5, 23 }
+numbers.push_front(15); // { 15, 1, 2, 3, 4, 5, 23 }
+numbers.emplace_back(24);   // { 15, 1, 2, 3, 4, 5, 23, 24 }
+numbers.emplace_front(14);  // { 14, 15, 1, 2, 3, 4, 5, 23, 24 }
+</code>
+</pre>
+          <p>Добавление в середину списка с помощью функции <strong>emplace()</strong>:</p>
+          <pre>
+<code>
+std::list<int> numbers = { 1, 2, 3, 4, 5 };
+auto iter = ++numbers.cbegin(); // итератор указывает на второй элемент
+numbers.emplace(iter, 8); // добавляем после первого элемента  numbers = { 1, 8, 2, 3, 4, 5};
+</code>
+</pre>
+          <p>Добавление в середину списка с помощью функции <strong>insert()</strong>:</p>
+          <pre>
+<code>
+std::list<int> numbers1 = { 1, 2, 3, 4, 5 };
+auto iter1 = numbers1.cbegin(); // итератор указывает на первый элемент
+numbers1.insert(iter1, 0); // добавляем начало списка  
+//numbers1 = { 0, 1, 2, 3, 4, 5};
+  
+std::list<int> numbers2 = { 1, 2, 3, 4, 5 };
+auto iter2 = numbers2.cbegin(); // итератор указывает на первый элемент
+numbers2.insert(++iter2, 3, 4); // добавляем после первого элемента три четверки  
+//numbers2 = { 1, 4, 4, 4, 2, 3, 4, 5};
+  
+std::list<int> values = { 10, 20, 30, 40, 50 };
+std::list<int> numbers3 = { 1, 2, 3, 4, 5 };
+auto iter3 = numbers3.cbegin(); // итератор указывает на первый элемент
+// добавляем в начало все элементы из values
+numbers3.insert(iter3, values.begin(), values.end());
+//numbers3 = { 10, 20, 30, 40, 50, 1, 2, 3, 4, 5};
+  
+std::list<int> numbers4 = { 1, 2, 3, 4, 5 };
+auto iter4 = numbers4.cend();   // итератор указывает на позицию за последним элементом
+// добавляем в конец список из трех элементов
+numbers4.insert(iter4, { 21, 22, 23 });
+//numbers4 = { 1, 2, 3, 4, 5, 21, 22, 23};
+</code>
+</pre>
+          <h2>Удаление элементов</h2>
+          <p>Для удаления элементов из контейнера list могут применяться следующие функции:</p>
+          <ul>
+            <li><strong>clear(p)</strong>: удаляет все элементы</li>
+            <li><strong>pop_back()</strong>: удаляет последний элемент</li>
+            <li><strong>pop_front()</strong>: удаляет первый элемент</li>
+            <li><strong>erase(p)</strong>: удаляет элемент, на который указывает итератор p. Возвращает итератор на
+              элемент, следующий после удаленного, или на конец контейнера, если удален последний элемент</li>
+            <li><strong>erase(begin, end)</strong>: удаляет элементы из диапазона, на начало и конец которого указывают
+              итераторы begin и end. Возвращает итератор на элемент, следующий после последнего удаленного, или на конец
+              контейнера, если удален последний элемент</li>
+          </ul>
+          <p></p>
+          <pre>
+<code>
+std::list<int> numbers = { 1, 2, 3, 4, 5 };
+numbers.pop_front();    // numbers = { 2, 3, 4, 5 }
+numbers.pop_back();     // numbers = { 2, 3, 4 }
+numbers.clear();    // numbers ={}
+  
+numbers = { 1, 2, 3, 4, 5 };
+auto iter = numbers.cbegin(); // указатель на первый элемент
+numbers.erase(iter);    // удаляем первый элемент
+// numbers = { 2, 4, 5, 6 }
+  
+numbers = { 1, 2, 3, 4, 5 };
+auto begin = numbers.begin(); // указатель на первый элемент
+auto end = numbers.end();       // указатель на последний элемент
+numbers.erase(++begin, --end);  // удаляем со второго элемента до последнего
+//numbers = {1, 5}
+</code>
+</pre>
           <div class="main__pagination">
             <div class="paginator previous"><a href="./lab1.html">
                 <img

@@ -37,28 +37,226 @@
     <div class="container-xxl my-md-4 bd-layout">
       <div class="row">
         <div class="col-sm-8 mx-auto">
+          <h1>Forward_list</h1>
+          <p>Контейнер <strong>forward_list</strong> представляет односвязный список. Для его использования необходимо
+            подключить заголовочный файл <strong>forward_list</strong>.</p>
+          <p>Создание односвязного списка:</p>
+          <pre>
+<code>
+std::forward_list<int> list1;                     // пустой список
+std::forward_list<int> list2(5);                  // list2 имеет 5 элементов, каждый из которых имеет значение по умолчанию
+std::forward_list<int> list3(5, 2);               // list3 состоит из 5 чисел, каждое число равно 2
+std::forward_list<int> list4{ 1, 2, 4, 5 };       // list4 состоит из чисел 1, 2, 4, 5
+std::forward_list<int> list5 = { 1, 2, 3, 4, 5 }; // list5 состоит из чисел 1, 2, 3, 4, 5
+std::forward_list<int> list6(list4);              // list6 - копия списка list4
+std::forward_list<int> list7 = list4;             // list7 - копия списка list4
+std::forward_list<int> list8({ 1, 2, 3, 4, 5, 6 }); // list8  состоит из чисел 1, 2, 3, 4, 5, 6
+</code>
+</pre>
+          <h2>Получение элементов</h2>
+          <p>Напрямую в списке forward_list можно получить только первый элемент. Для этого применяется функция front().
+            Для перебора элементов также можно использовать цикл:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <forward_list>
+  
+int main()
+{
+    std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+  
+    int first = numbers.front();    // 1
+  
+    for (int n : numbers)
+        std::cout << n << "\t";
+    std::cout << std::endl;
+    return 0;
+}
+</code>
+</pre>
+          <p>Также для перебора и получения элементов можно использовать итераторы. Причем класс forward_list добавляет
+            ряд дополнительных функций для получения итераторов: <strong>before_begin()</strong> и
+            <strong>cbefore_begin()</strong>. Обе функции возвращают итератор (вторая функция возвращает константный
+            итератор const_iterator) на несуществующий элемент непосредственно перед началом списка. К значению по этому
+            итератору обратиться нельзя.</p>
+          <pre>
+<code>
+#include <iostream>
+#include <forward_list>
+  
+int main()
+{
+    std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+  
+    auto prev = numbers.before_begin();
+  
+    auto current = numbers.begin();
+    auto end = numbers.end();
+    while (current != end)
+    {
+        std::cout << *current << "\t";
+        current++;
+    }
+    std::cout << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <h2>Размер списка</h2>
+          <p>По умолчанию класс forward_list не определяет никаких функций, которые позволяют получить размер
+            контейнера. В этом классе только функция <strong>max_size()</strong>, которая позволяет получить масимальный
+            размер контейнера.</p>
+          <p>Функция <strong>empty()</strong> позволяет узнать, пуст ли список. Если он пуст, то функция возвращает
+            значение true, иначе возвращается значение false:</p>
+          <pre>
+<code>
+std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+if (numbers.empty())
+    std::cout << "The forward_list is empty" << std::endl;
+else
+    std::cout << "The forward_list is not empty" << std::endl;
+</code>
+</pre>
+          <p>Для изменения размера контейнера можно использовать функцию <strong>resize()</strong>, которая имеет две
+            формы:</p>
+          <ul>
+            <li><strong>resize(n)</strong>: оставляет в списке n первых элементов. Если список содержит больше
+              элементов, то он усекается до первых n элементов. Если размер списка меньше n, то добавляются недостающие
+              элементы и инициализируются значением по умолчанию</li>
+            <li><strong>resize(n, value)</strong>: также оставляет в списке n первых элементов. Если размер списка
+              меньше n, то добавляются недостающие элементы со значением value</li>
+          </ul>
+          <p>Использование функции:</p>
+          <pre>
+<code>
+std::forward_list<int> numbers = { 1, 2, 3, 4, 5, 6 };
+numbers.resize(4);  // оставляем первые четыре элемента - numbers = {1, 2, 3, 4}
+  
+numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
+</code>
+</pre>
+          <h2>Изменение элементов списка</h2>
+          <p>Функция <strong>assign()</strong> позволяет заменить все элементы списка определенным набором. Она имеет
+            следующие формы:</p>
+          <ul>
+            <li><strong>assign(il)</strong>: заменяет содержимое контейнера элементами из списка инициализации il</li>
+            <li><strong>assign(n, value)</strong>: заменяет содержимое контейнера n элементами, которые имеют значение
+              value</li>
+            <li><strong>assign(begin, end)</strong>: заменяет содержимое контейнера элементами из диапазона, на начало и
+              конец которого указывают итераторы begin и end</li>
+          </ul>
+          <p>Применение функции:</p>
+          <pre>
+<code>
+std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
 
+numbers.assign({ 21, 22, 23, 24, 25 }); // numbers = { 21, 22, 23, 24, 25 }
+  
+numbers.assign(4, 3);       // numbers = {3, 3, 3, 3}
+  
+std::list<int> values = { 6, 7, 8, 9, 10, 11 };
+auto start = ++values.begin();  // итератор указывает на второй элемент из values
+auto end = values.end();
+numbers.assign(start, end); //  numbers = { 7, 8, 9, 10, 11 }
+</code>
+</pre>
+          <p>Функция <strong>swap()</strong> обменивает значениями два списка:</p>
+          <pre>
+<code>
+std::forward_list<int> list1 = { 1, 2, 3, 4, 5 };
+std::forward_list<int> list2 = { 6, 7, 8, 9};
+list1.swap(list2);
+// list1 = { 6, 7, 8, 9};
+// list2 = { 1, 2, 3, 4, 5 };
+</code>
+</pre>
+          <h2>Добавление элементов</h2>
+          <p>Для добавления элементов в forward_list применяются следующие функции:</p>
+          <ul>
+            <li><strong>push_front(val)</strong>: добавляет объект val в начало списка</li>
+            <li><strong>emplace_front(val)</strong>: добавляет объект val в начало списка</li>
+            <li><strong>emplace_after(p, val)</strong>: вставляет объект val после элемента, на который указывает
+              итератор p. Возвращает итератор на вставленный элемент. Если p представляет итератор на позицию после
+              конца списка, то результат неопределен.</li>
+            <li><strong>insert_after(p, val)</strong>: вставляет объект val после элемента, на который указывает
+              итератор p. Возвращает итератор на вставленный элемент.</li>
+            <li><strong>insert_after(p, n, val)</strong>: вставляет n объектов val после элемента, на который указывает
+              итератор p. Возвращает итератор на последний вставленный элемент.</li>
+            <li><strong>insert_after(p, begin, end)</strong>: вставляет после элемента, на который указывает итератор p,
+              набор объектов из другого контейнера, начало и конец которого определяется итераторами begin и end.
+              Возвращает итератор на последний вставленный элемент.</li>
+            <li><strong>insert_after(p, il)</strong>: вставляет после элемента, на который указывает итератор p, список
+              инициализации il. Возвращает итератор на последний вставленный элемент.</li>
+          </ul>
+          <p>Применение функций:</p>
+          <pre>
+<code>
+#include <iostream>
+#include <list>
+#include <forward_list>
+  
+int main()
+{
+    std::forward_list<int> numbers = { 7, 8 };
+    numbers.push_front(6);  // добавляем в начало число 6
+    // numbers =  { 6, 7, 8 }
+  
+    numbers.emplace_front(-3);  // добавляем в начало число -3
+    // numbers =  { -3, 6, 7, 8 }
+  
+    auto iter = numbers.begin();
+    iter = numbers.emplace_after(iter, -2); // добавляем после итератора число -2
+    // numbers =  { -3, -2, 6, 7, 8 }
+  
+    iter = numbers.insert_after(iter, -1);
+    // numbers =  { -3, -2, -1, 6, 7, 8 }
+  
+    iter = numbers.insert_after(iter, 3, 0);    // добавляем три нуля
+    // numbers =  { -3, -2, -1, 0, 0, 0, 6, 7, 8 }
+  
+    std::list<int> values = { 1, 2, 3 };
+    iter = numbers.insert_after(iter, values.begin(), values.end()); // добавляем все элементы из values
+    // numbers =  { -3, -2, -1, 0, 0, 0, 1, 2, 3, 6, 7, 8 }
+  
+    numbers.insert_after(iter, { 4, 5 }); // добавляем список { 4, 5 }
+    // numbers =  { -3, -2, -1, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8 }
+  
+    for(int n : numbers)
+        std::cout << n << "\t";
+    std::cout << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <h2>Удаление элементов</h2>
+          <p>Чтобы удалить элемент из контейнера forward_list можно использовать следующие функции:</p>
+          <ul>
+            <li><strong>clear()</strong>: удаляет все элементы</li>
+            <li><strong>pop_front()</strong>: удаляет первый элемент</li>
+            <li><strong>erase_after(p)</strong>: удаляет элемент после элемента, на который указывает итератор p.
+              Возвращает итератор на элемент после удаленного</li>
+            <li><strong>erase_after(begin, end)</strong>: удаляет диапазон элементов, на начало и конец которого
+              указывают соответственно итераторы begin и end. Возвращает итератор на элемент после последнего удаленного
+            </li>
+          </ul>
+          <p>Использование функций:</p>
+          <pre>
+<code>
+std::forward_list<int> numbers = { 1, 2, 3, 4, 5, 6, 7};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+numbers.pop_front();
+// numbers = { 2, 3, 4, 5, 6, 7};
+  
+auto iter = numbers.erase_after(numbers.begin());
+// numbers = { 2, 4, 5, 6, 7 };
+// iter указывает на элемент 4
+  
+numbers.erase_after(iter, numbers.end());
+// numbers = { 2, 4 };
+</code>
+</pre>
           <div class="main__pagination">
             <div class="paginator previous"><a href="./lab1.html">
                 <img
