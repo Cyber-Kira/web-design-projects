@@ -50,7 +50,7 @@ void print(int *numbers);
           <p>Передадим в функцию массив:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(int[]);
   
@@ -71,7 +71,7 @@ void print(int numbers[])
           <p>Теперь определим параметр как указатель:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(int*);
   
@@ -121,7 +121,7 @@ void print(int numbers[])
             '\0'. Фактически нулевой символ служит признком окончания символьного массива:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(char[]);
   
@@ -145,7 +145,7 @@ void print(char chars[])
           <p>Второй подход заключается в передаче в функцию размера массива:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(int[], int);
   
@@ -180,7 +180,7 @@ int *end = std::end(nums);      // указатель на конец масси
           <p>Применим данные функции:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(int*, int*);
   
@@ -209,7 +209,7 @@ void print(int *begin, int *end)
             параметр-массив определять как константный:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(const int*, const int*);
 void twice(int*, int*);
@@ -291,7 +291,7 @@ void twice(int *begin, int *end)
           <p>Рассмотрим применение указателя на массив в качестве параметра:</p>
           <pre>
 <code>
-#include <iostream>
+#include &lt;iostream>
 
 void print(int(*)[3], int);
 int main()
