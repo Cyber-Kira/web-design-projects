@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>C++</title>
+</head>
+
+<body>
+
+  <div class="secondary-color sticky-top">
+    <header class="container sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">С++</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="../../../../index.html">Главная</a>
+              <a class="nav-link" href="../../../lessons.html">Уроки</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <div class="container-xxl my-md-4 bd-layout">
+      <div class="row">
+        <div class="col-sm-8 mx-auto">
+          <h1>Шаблон класса</h1>
+          <p>Шаблоны позволяют определить конструкции (функции, классы), которые используют определенные типы, но на
+            момент написания кода точно не известно, что это будут за типы. Иными словами, шаблоны позволяют определить
+            универсальные конструкции, которые не зависят от определенного типа.</p>
+          <p>Шаблон класса (class template) позволяет задать тип для объектов, используемых в классе. Но прежде чем
+            перейти к определению шаблона класса, рассмотрим проблему, с которой мы можем столкнуться и которую
+            позволяют решить шаблоны.</p>
+          <p>Допустим, нам надо описать класс банковского счета. Банковский счет должен иметь номер, однако на момент
+            написания класса может быть неизвестно, какой тип будет представлять номер счета - это может быть числовой
+            номер 1233545, а может и быть просто набор символов в виде строки, например, "1234878rtyio". На первый
+            взгляд, мы можем просто определить два класса:</p>
+          <pre>
+<code>
+#include &lt;iostream>
+#include &lt;string>
+  
+class IntAccount {
+private:
+    int id;
+public:
+    IntAccount(int id) : id(id)
+    { }
+    int getId() {
+        return id;
+    }
+};
+  
+class StrAccount {
+private:
+    std::string id;
+public:
+    StrAccount(std::string id) : id(id)
+    { }
+    std::string getId() {
+        return id;
+    }
+};
+  
+int main()
+{
+    StrAccount acc1("ca-pub1343767");
+    IntAccount acc2(1234566);
+  
+    std::cout << "acc1: " << acc1.getId() << std::endl;
+    std::cout << "acc2: " << acc2.getId() << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Хотя данный пример работает, но по сути мы получаем два идентичных класса, которые отличаются только типом
+            id. Шаблоны класса позволяют уменьшить повторяемость кода, задав для класса универсальный тип. Изменим код,
+            применив шаблоны:</p>
+          <pre>
+<code>
+template &lt;typename T>
+class Account {
+private:
+    T id;
+public:
+    Account(T id) : id(id)
+    { }
+    T getId() {
+        return id;
+    }
+};
+</code>
+</pre>
+          <p>Для применения шаблонов перед классом указывается ключевое слово <strong>template</strong>, после которого
+            идут угловые скобки. В угловых скобках после слова <strong>typename</strong> идет параметр шаблона. Можно
+            определить несколько параметров шаблона, в примере выше применяется только один параметр.</p>
+          <p>Параметр шаблона представляет произвольный идентификатор, в качестве которого, как правило, применяюся
+            заглавные буквы, например, T. Но это необязательно. То есть в данном случае параметр T будет представлять
+            некоторый тип, который становится известным во время компиляции. Это может быть и тип int, и double, и
+            string, и любой другой тип. И теперь идентификатор счета будет представлять тип, который передается через
+            параметр T.</p>
+          <p>Используем этот класс:</p>
+          <pre>
+<code>
+#include &lt;iostream>
+#include &lt;string>
+  
+template &lt;typename T>
+class Account {
+private:
+    T id;
+public:
+    Account(T id) : id(id)
+    { }
+    T getId() {
+        return id;
+    }
+};
+  
+int main()
+{
+    Account&lt;std::string> acc1("ca-pub1343767");
+    Account&lt;int> acc2(1234566);
+  
+    std::cout << "acc1: " << acc1.getId() << std::endl;
+    std::cout << "acc2: " << acc2.getId() << std::endl;
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>При использовании шаблона класса необходимо в угловых скобках после названия класса указать конкретный тип,
+            который будет применяться вместо параметра T. Так, в первом случае вместо T применяется тип string, поэтому
+            в конструктор класса можно передать строку:</p>
+          <pre><code>Account&lt;std::string> acc1("ca-pub1343767");</code></pre>
+          <p>Во втором случае применяется тип int, поэтому в конструктор передается число:</p>
+          <pre><code>Account&lt;int> acc2(1234566);</code></pre>
+          <p>Также можно применять сразу несколько параметров. Например, необходимо определить класс банковского
+            перевода:</p>
+          <pre>
+<code>
+#include &lt;iostream>
+#include &lt;string>
+  
+template &lt;typename T, typename V>
+class Transaction
+{
+public:
+    Transaction(T fromAcc, T toAcc, V code, int sum):
+        fromAccount(fromAcc), toAccount(toAcc), code(code), sum(sum)
+    { }
+    void getInfo()
+    {
+        std::cout << "From: " << fromAccount << "\nTo: " << toAccount
+            << "\nSum: " << sum << "\nCode: " << code << std::endl;
+    }
+private:
+    T fromAccount;  // с какого счета
+    T toAccount;    // на какой счет
+    V code;         // код операции
+    int sum;        // сумма перевода
+};
+  
+int main()
+{
+    Transaction&lt;std::string, int> t1("id1234", "id5678", 2804, 5000);
+    t1.getInfo();
+  
+    return 0;
+}
+</code>
+</pre>
+          <p>Класс Transaction использует два параметра типа T и V. Параметр T определяет тип для счетов, которые
+            участвуют вв процессе перевода. Здесь в качестве номеров счетов можно использовать и числовые и строковые
+            значения и значения других типов. А параметр V задает тип для кода операции - опять же это может быть любой
+            тип.</p>
+          <p>При использовании шаблона в этом случае надо указать два типа:</p>
+          <pre><code>Transaction&lt;std::string, int> t1("id1234", "id5678", 2804, 5000);</code></pre>
+          <p>Типы передаются параметрам по позиции. Так, тип string будет использоваться вместо параметра T, а тип int -
+            вместо параметра V.</p>
+          <div class="main__pagination">
+            <div class="paginator previous"><a href="./lab1.html">
+                <img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABRklEQVRoQ+2X4W3CMBCFv0xQRmADugHdpIzQEWCCsgFsUDoBdIOO0BW6AXoSlixInDNtKl91lvIrl/jLy7tnu8Ph6BwyE9B/9ddC6VC6oEDYI+wR9rB5YAY8AQdbeV3VFI04B96Ad2Bdh2Or/m3oR+AISOmNB+gV8HoBlmTNQ79cgPP/2zT0HnjucWOT0PKtGk4p0Teag04JocYbGk1B5wlRyqhmoK8TogQtr+uyjG/g01Kompqc7ksI6zxjdR+F3rh51gothXdjM//g/iTQ4nGndBJRim+BB4OqUu9kqFPJV4X/qzyd5ld6CGYMvJn0SODKaW07F15yOnFqRRT40suKmHO62nvk4O52eUPJ0lwjDvVfnixuoPUxKVnUpC7OiHmyuDqNGxfB+8usG6b7Z5jgyYCeQNTeV4bSoXRBgbBH2OO/2eMMUaUwLofhnv8AAAAASUVORK5CYII=" />
+                Лабораторная №1</a></div>
+            <div class="paginator next"><a href="./lab3.html">Лабораторная №3<img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAYAAAA6GuKaAAABUUlEQVRoQ+2X0U3EMBBE31VAC5RAB0AFQAfQAVRwlAAdQCfQAXRACdABGnT5JN6xFfssraV83Tr3Mpkdb3ZMuHYTMpPQvd5aKp1KryiQ9kh7pD3iHrgG3oDv+JZY5ZaN+AhcATfAVwwnVrU19P6g9CXwEUMqV/WAFoUs8gC8lJHKFb2gF5J74LmMtV7RG1o0UvuuBXwEtHiVKmrQqmQZBS1wNWZVsoyEXhrUThYX+gw4CfrxFtBVWnayuNDy4nmJovL3cLIcE7SeValSzPJjgtbh8xR5Sy60PHoauTFwEbTSDyBrFBVe/teFDvL+lWlg0uyxtgSsh7PmkpHQn4DGV3sCHAX9fgCe5kR8Deb3v7bqrXQ4IdYaoRe0nRCjoasSYiS00qEqIUZBT/k17hxEVu2WjWiBOMUJ7ajVUptKt6jn7E2lHbVaalPpFvWcvVMq/QsQrjouZKOwvQAAAABJRU5ErkJggg==" /></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div class="secondary-color">
+    <footer>
+      <p class="footer_p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sed ante a suscipit.
+        Mauris tempor
+        suscipit justo vel lacinia. Curabitur hendrerit lobortis ligula nec.</p>
+    </footer>
+  </div>
+
+  <!-- scripts -->
+  <script src="./js/script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
