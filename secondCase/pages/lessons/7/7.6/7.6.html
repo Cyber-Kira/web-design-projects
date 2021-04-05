@@ -43,13 +43,13 @@
           <p>Создание списка:</p>
           <pre>
 <code>
-std::list<int> list1;                   // пустой список
-std::list<int> list2(5);                // список list2 состоит из 5 чисел, каждый элемент имеет значение по умолчанию
-std::list<int> list3(5, 2);             // список list3 состоит из 5 чисел, каждое число равно 2
-std::list<int> list4{ 1, 2, 4, 5 };     // список list4 состоит из чисел 1, 2, 4, 5
-std::list<int> list5 = { 1, 2, 3, 5 };  // список list5 состоит из чисел 1, 2, 4, 5
-std::list<int> list6(list4);            // список list6 - копия списка list4
-std::list<int> list7 = list4;           // список list7 - копия списка list4
+std::list&lt;int> list1;                   // пустой список
+std::list&lt;int> list2(5);                // список list2 состоит из 5 чисел, каждый элемент имеет значение по умолчанию
+std::list&lt;int> list3(5, 2);             // список list3 состоит из 5 чисел, каждое число равно 2
+std::list&lt;int> list4{ 1, 2, 4, 5 };     // список list4 состоит из чисел 1, 2, 4, 5
+std::list&lt;int> list5 = { 1, 2, 3, 5 };  // список list5 состоит из чисел 1, 2, 4, 5
+std::list&lt;int> list6(list4);            // список list6 - копия списка list4
+std::list&lt;int> list7 = list4;           // список list7 - копия списка list4
 </code>
 </pre>
           <h2>Получение элементов</h2>
@@ -66,7 +66,7 @@ std::list<int> list7 = list4;           // список list7 - копия сп�
   
 int main()
 {
-    std::list<int> numbers = { 1, 2, 3, 4, 5 };
+    std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
   
     int first = numbers.front();  // 1
     int last = numbers.back();  // 5
@@ -90,7 +90,7 @@ int main()
           <p>Для получения размера списка можно использовать функцию <strong>size()</strong>:</p>
           <pre>
 <code>
-std::list<int> numbers = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 int size = numbers.size();   // 5
 </code>
 </pre>
@@ -98,7 +98,7 @@ int size = numbers.size();   // 5
             возвращается значение false:</p>
           <pre>
 <code>
-std::list<int> numbers = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 if (numbers.empty())
     std::cout << "The list is empty" << std::endl;
 else
@@ -135,13 +135,13 @@ numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
           <p>Применение функции:</p>
           <pre>
 <code>
-std::list<int> numbers = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 
 numbers.assign({ 21, 22, 23, 24, 25 }); // numbers = { 21, 22, 23, 24, 25 }
   
 numbers.assign(4, 3);       // numbers = {3, 3, 3, 3}
   
-std::list<int> values = { 6, 7, 8, 9, 10, 11 };
+std::list&lt;int> values = { 6, 7, 8, 9, 10, 11 };
 auto start = ++values.begin();  // итератор указывает на второй элемент из values
 auto end = values.end();
 numbers.assign(start, end); //  numbers = { 7, 8, 9, 10, 11 }
@@ -150,8 +150,8 @@ numbers.assign(start, end); //  numbers = { 7, 8, 9, 10, 11 }
           <p>Функция swap() обменивает значениями два списка:</p>
           <pre>
 <code>
-std::list<int> list1 = { 1, 2, 3, 4, 5 };
-std::list<int> list2 = { 6, 7, 8, 9};
+std::list&lt;int> list1 = { 1, 2, 3, 4, 5 };
+std::list&lt;int> list2 = { 6, 7, 8, 9};
 list1.swap(list2);
 // list1 = { 6, 7, 8, 9};
 // list2 = { 1, 2, 3, 4, 5 };
@@ -182,7 +182,7 @@ list1.swap(list2);
           <p>Функции push_back(), push_front(), emplace_back() и emplace_front():</p>
           <pre>
 <code>
-std::list<int> numbers = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 numbers.push_back(23);  // { 1, 2, 3, 4, 5, 23 }
 numbers.push_front(15); // { 15, 1, 2, 3, 4, 5, 23 }
 numbers.emplace_back(24);   // { 15, 1, 2, 3, 4, 5, 23, 24 }
@@ -192,7 +192,7 @@ numbers.emplace_front(14);  // { 14, 15, 1, 2, 3, 4, 5, 23, 24 }
           <p>Добавление в середину списка с помощью функции <strong>emplace()</strong>:</p>
           <pre>
 <code>
-std::list<int> numbers = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 auto iter = ++numbers.cbegin(); // итератор указывает на второй элемент
 numbers.emplace(iter, 8); // добавляем после первого элемента  numbers = { 1, 8, 2, 3, 4, 5};
 </code>
@@ -200,24 +200,24 @@ numbers.emplace(iter, 8); // добавляем после первого эле
           <p>Добавление в середину списка с помощью функции <strong>insert()</strong>:</p>
           <pre>
 <code>
-std::list<int> numbers1 = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers1 = { 1, 2, 3, 4, 5 };
 auto iter1 = numbers1.cbegin(); // итератор указывает на первый элемент
 numbers1.insert(iter1, 0); // добавляем начало списка  
 //numbers1 = { 0, 1, 2, 3, 4, 5};
   
-std::list<int> numbers2 = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers2 = { 1, 2, 3, 4, 5 };
 auto iter2 = numbers2.cbegin(); // итератор указывает на первый элемент
 numbers2.insert(++iter2, 3, 4); // добавляем после первого элемента три четверки  
 //numbers2 = { 1, 4, 4, 4, 2, 3, 4, 5};
   
-std::list<int> values = { 10, 20, 30, 40, 50 };
-std::list<int> numbers3 = { 1, 2, 3, 4, 5 };
+std::list&lt;int> values = { 10, 20, 30, 40, 50 };
+std::list&lt;int> numbers3 = { 1, 2, 3, 4, 5 };
 auto iter3 = numbers3.cbegin(); // итератор указывает на первый элемент
 // добавляем в начало все элементы из values
 numbers3.insert(iter3, values.begin(), values.end());
 //numbers3 = { 10, 20, 30, 40, 50, 1, 2, 3, 4, 5};
   
-std::list<int> numbers4 = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers4 = { 1, 2, 3, 4, 5 };
 auto iter4 = numbers4.cend();   // итератор указывает на позицию за последним элементом
 // добавляем в конец список из трех элементов
 numbers4.insert(iter4, { 21, 22, 23 });
@@ -239,7 +239,7 @@ numbers4.insert(iter4, { 21, 22, 23 });
           <p></p>
           <pre>
 <code>
-std::list<int> numbers = { 1, 2, 3, 4, 5 };
+std::list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 numbers.pop_front();    // numbers = { 2, 3, 4, 5 }
 numbers.pop_back();     // numbers = { 2, 3, 4 }
 numbers.clear();    // numbers ={}

@@ -43,14 +43,14 @@
           <p>Создание односвязного списка:</p>
           <pre>
 <code>
-std::forward_list<int> list1;                     // пустой список
-std::forward_list<int> list2(5);                  // list2 имеет 5 элементов, каждый из которых имеет значение по умолчанию
-std::forward_list<int> list3(5, 2);               // list3 состоит из 5 чисел, каждое число равно 2
-std::forward_list<int> list4{ 1, 2, 4, 5 };       // list4 состоит из чисел 1, 2, 4, 5
-std::forward_list<int> list5 = { 1, 2, 3, 4, 5 }; // list5 состоит из чисел 1, 2, 3, 4, 5
-std::forward_list<int> list6(list4);              // list6 - копия списка list4
-std::forward_list<int> list7 = list4;             // list7 - копия списка list4
-std::forward_list<int> list8({ 1, 2, 3, 4, 5, 6 }); // list8  состоит из чисел 1, 2, 3, 4, 5, 6
+std::forward_list&lt;int> list1;                     // пустой список
+std::forward_list&lt;int> list2(5);                  // list2 имеет 5 элементов, каждый из которых имеет значение по умолчанию
+std::forward_list&lt;int> list3(5, 2);               // list3 состоит из 5 чисел, каждое число равно 2
+std::forward_list&lt;int> list4{ 1, 2, 4, 5 };       // list4 состоит из чисел 1, 2, 4, 5
+std::forward_list&lt;int> list5 = { 1, 2, 3, 4, 5 }; // list5 состоит из чисел 1, 2, 3, 4, 5
+std::forward_list&lt;int> list6(list4);              // list6 - копия списка list4
+std::forward_list&lt;int> list7 = list4;             // list7 - копия списка list4
+std::forward_list&lt;int> list8({ 1, 2, 3, 4, 5, 6 }); // list8  состоит из чисел 1, 2, 3, 4, 5, 6
 </code>
 </pre>
           <h2>Получение элементов</h2>
@@ -63,7 +63,7 @@ std::forward_list<int> list8({ 1, 2, 3, 4, 5, 6 }); // list8  состоит и�
   
 int main()
 {
-    std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+    std::forward_list&lt;int> numbers = { 1, 2, 3, 4, 5 };
   
     int first = numbers.front();    // 1
   
@@ -86,7 +86,7 @@ int main()
   
 int main()
 {
-    std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+    std::forward_list&lt;int> numbers = { 1, 2, 3, 4, 5 };
   
     auto prev = numbers.before_begin();
   
@@ -111,7 +111,7 @@ int main()
             значение true, иначе возвращается значение false:</p>
           <pre>
 <code>
-std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+std::forward_list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 if (numbers.empty())
     std::cout << "The forward_list is empty" << std::endl;
 else
@@ -130,7 +130,7 @@ else
           <p>Использование функции:</p>
           <pre>
 <code>
-std::forward_list<int> numbers = { 1, 2, 3, 4, 5, 6 };
+std::forward_list&lt;int> numbers = { 1, 2, 3, 4, 5, 6 };
 numbers.resize(4);  // оставляем первые четыре элемента - numbers = {1, 2, 3, 4}
   
 numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
@@ -149,13 +149,13 @@ numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
           <p>Применение функции:</p>
           <pre>
 <code>
-std::forward_list<int> numbers = { 1, 2, 3, 4, 5 };
+std::forward_list&lt;int> numbers = { 1, 2, 3, 4, 5 };
 
 numbers.assign({ 21, 22, 23, 24, 25 }); // numbers = { 21, 22, 23, 24, 25 }
   
 numbers.assign(4, 3);       // numbers = {3, 3, 3, 3}
   
-std::list<int> values = { 6, 7, 8, 9, 10, 11 };
+std::list&lt;int> values = { 6, 7, 8, 9, 10, 11 };
 auto start = ++values.begin();  // итератор указывает на второй элемент из values
 auto end = values.end();
 numbers.assign(start, end); //  numbers = { 7, 8, 9, 10, 11 }
@@ -164,8 +164,8 @@ numbers.assign(start, end); //  numbers = { 7, 8, 9, 10, 11 }
           <p>Функция <strong>swap()</strong> обменивает значениями два списка:</p>
           <pre>
 <code>
-std::forward_list<int> list1 = { 1, 2, 3, 4, 5 };
-std::forward_list<int> list2 = { 6, 7, 8, 9};
+std::forward_list&lt;int> list1 = { 1, 2, 3, 4, 5 };
+std::forward_list&lt;int> list2 = { 6, 7, 8, 9};
 list1.swap(list2);
 // list1 = { 6, 7, 8, 9};
 // list2 = { 1, 2, 3, 4, 5 };
@@ -198,7 +198,7 @@ list1.swap(list2);
   
 int main()
 {
-    std::forward_list<int> numbers = { 7, 8 };
+    std::forward_list&lt;int> numbers = { 7, 8 };
     numbers.push_front(6);  // добавляем в начало число 6
     // numbers =  { 6, 7, 8 }
   
@@ -215,7 +215,7 @@ int main()
     iter = numbers.insert_after(iter, 3, 0);    // добавляем три нуля
     // numbers =  { -3, -2, -1, 0, 0, 0, 6, 7, 8 }
   
-    std::list<int> values = { 1, 2, 3 };
+    std::list&lt;int> values = { 1, 2, 3 };
     iter = numbers.insert_after(iter, values.begin(), values.end()); // добавляем все элементы из values
     // numbers =  { -3, -2, -1, 0, 0, 0, 1, 2, 3, 6, 7, 8 }
   
@@ -244,7 +244,7 @@ int main()
           <p>Использование функций:</p>
           <pre>
 <code>
-std::forward_list<int> numbers = { 1, 2, 3, 4, 5, 6, 7};
+std::forward_list&lt;int> numbers = { 1, 2, 3, 4, 5, 6, 7};
 
 numbers.pop_front();
 // numbers = { 2, 3, 4, 5, 6, 7};

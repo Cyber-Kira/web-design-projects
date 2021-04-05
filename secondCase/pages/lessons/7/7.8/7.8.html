@@ -43,14 +43,14 @@
           <p>Способы создания двухсторонней очереди:</p>
           <pre>
 <code>
-std::deque<int> deque1;                     // пустая очередь
-std::deque<int> deque2(5);                  // deque2 состоит из 5 чисел, каждый элемент имеет значение по умолчанию
-std::deque<int> deque(5, 2);                // deque3 состоит из 5 чисел, каждое число равно 2
-std::deque<int> deque4{ 1, 2, 4, 5 };       // deque4 состоит из чисел 1, 2, 4, 5
-std::deque<int> deque5 = { 1, 2, 3, 5 };    // deque5 состоит из чисел 1, 2, 3, 5
-std::deque<int> deque6({ 1, 2, 3, 4, 5 });  // deque6  состоит из чисел 1, 2, 3, 4, 5
-std::deque<int> deque7(deque4);             // deque7 - копия очереди deque4
-std::deque<int> deque8 = deque7;            // deque8 - копия очереди deque7
+std::deque&lt;int> deque1;                     // пустая очередь
+std::deque&lt;int> deque2(5);                  // deque2 состоит из 5 чисел, каждый элемент имеет значение по умолчанию
+std::deque&lt;int> deque(5, 2);                // deque3 состоит из 5 чисел, каждое число равно 2
+std::deque&lt;int> deque4{ 1, 2, 4, 5 };       // deque4 состоит из чисел 1, 2, 4, 5
+std::deque&lt;int> deque5 = { 1, 2, 3, 5 };    // deque5 состоит из чисел 1, 2, 3, 5
+std::deque&lt;int> deque6({ 1, 2, 3, 4, 5 });  // deque6  состоит из чисел 1, 2, 3, 4, 5
+std::deque&lt;int> deque7(deque4);             // deque7 - копия очереди deque4
+std::deque&lt;int> deque8 = deque7;            // deque8 - копия очереди deque7
 </code>
 </pre>
           <h2>Получение элементов очереди</h2>
@@ -68,7 +68,7 @@ std::deque<int> deque8 = deque7;            // deque8 - копия очеред�
   
 int main()
 {
-    std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+    std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
   
     int first = numbers.front();    // 1
     int last = numbers.back();      // 5
@@ -84,7 +84,7 @@ int main()
             который выходит за границы контейнера, то результат будет неопредленным:</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
 int eighth = numbers[7];
 </code>
 </pre>
@@ -98,7 +98,7 @@ int eighth = numbers[7];
   
 int main()
 {
-    std::deque<int> numbers = { 1, 2, 3, 4, 5};
+    std::deque&lt;int> numbers = { 1, 2, 3, 4, 5};
     try
     {
         int n = numbers.at(7);
@@ -120,7 +120,7 @@ int main()
   
 int main()
 {
-    std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+    std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
   
     for (int n : numbers)
         std::cout << n << "\t";
@@ -144,7 +144,7 @@ int main()
             в очереди есть элементы:</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
 if (numbers.empty())
 {
     std::cout << "Deque is empty" << std::endl;
@@ -167,7 +167,7 @@ else
           <p>Применение функции:</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5, 6 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5, 6 };
 numbers.resize(4);  // оставляем первые четыре элемента - numbers = {1, 2, 3, 4}
   
 numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
@@ -188,13 +188,13 @@ numbers.resize(6, 8);    // numbers = {1, 2, 3, 4, 8, 8}
           <p>Применение функции:</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
 
 numbers.assign({ 21, 22, 23, 24, 25 }); // numbers = { 21, 22, 23, 24, 25 }
   
 numbers.assign(4, 3);                   // numbers = {3, 3, 3, 3}
   
-std::deque<int> values = { 6, 7, 8, 9, 10, 11 };
+std::deque&lt;int> values = { 6, 7, 8, 9, 10, 11 };
 auto start = values.begin() + 2;    // итератор указывает на третий элемент
 auto end = values.end();            // итератор указывает на последний элемент
 numbers.assign(start, end);         //  numbers = { 8, 9, 10, 11 }
@@ -203,8 +203,8 @@ numbers.assign(start, end);         //  numbers = { 8, 9, 10, 11 }
           <p>Функция <strong>swap()</strong> обменивает значениями две очереди:</p>
           <pre>
 <code>
-std::deque<int> deque1 = { 1, 2, 3, 4, 5 };
-std::deque<int> deque2 = { 6, 7, 8, 9};
+std::deque&lt;int> deque1 = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> deque2 = { 6, 7, 8, 9};
 deque1.swap(deque2);    // deque1 = { 6, 7, 8, 9};
 </code>
 </pre>
@@ -233,7 +233,7 @@ deque1.swap(deque2);    // deque1 = { 6, 7, 8, 9};
           <p>Функции push_back(), push_front(), emplace_back() и emplace_front():</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
 numbers.push_back(6);   // { 1, 2, 3, 4, 5, 6 }
 numbers.push_front(0);  // { 0, 1, 2, 3, 4, 5, 6 }
 numbers.emplace_back(7);    // { 0, 1, 2, 3, 4, 5, 6, 7 }
@@ -243,7 +243,7 @@ numbers.emplace_front(-1);  // { -1, 0, 1, 2, 3, 4, 5, 6, 7 }
           <p>Добавление в середину списка с помощью функции <strong>emplace()</strong>:</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
 auto iter = ++numbers.cbegin(); // итератор указывает на второй элемент
 numbers.emplace(iter, 8); // добавляем после первого элемента  numbers = { 1, 8, 2, 3, 4, 5};
 </code>
@@ -251,24 +251,24 @@ numbers.emplace(iter, 8); // добавляем после первого эле
           <p>Добавление в середину списка с помощью функции <strong>insert()</strong>:</p>
           <pre>
 <code>
-std::deque<int> numbers1 = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers1 = { 1, 2, 3, 4, 5 };
 auto iter1 = numbers1.cbegin(); // итератор указывает на второй элемент
 numbers1.insert(iter1 + 2, 8); // добавляем после второго элемента  
 //numbers1 = { 1, 2, 8, 3, 4, 5};
   
-std::deque<int> numbers2 = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers2 = { 1, 2, 3, 4, 5 };
 auto iter2 = numbers2.cbegin(); // итератор указывает на первый элемент
 numbers2.insert(iter2, 3, 4); // добавляем вначало три четверки  
 //numbers2 = { 4, 4, 4, 1, 2, 3, 4, 5};
   
-std::list<int> values = { 10, 20, 30, 40, 50 };
-std::deque<int> numbers3 = { 1, 2, 3, 4, 5 };
+std::list&lt;int> values = { 10, 20, 30, 40, 50 };
+std::deque&lt;int> numbers3 = { 1, 2, 3, 4, 5 };
 auto iter3 = numbers3.cbegin(); // итератор указывает на первый элемент
 // добавляем в начало все элементы из values
 numbers3.insert(iter3, values.begin(), values.end());
 //numbers3 = { 10, 20, 30, 40, 50, 1, 2, 3, 4, 5};
   
-std::deque<int> numbers4 = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers4 = { 1, 2, 3, 4, 5 };
 auto iter4 = numbers4.cend();   // итератор указывает на позицию за последним элементом
 // добавляем после последнего элемента список { 21, 22, 23 }
 numbers4.insert(iter4, { 21, 22, 23 });
@@ -292,7 +292,7 @@ numbers4.insert(iter4, { 21, 22, 23 });
           <p>Применение функций:</p>
           <pre>
 <code>
-std::deque<int> numbers = { 1, 2, 3, 4, 5 };
+std::deque&lt;int> numbers = { 1, 2, 3, 4, 5 };
 numbers.pop_front();    // numbers = { 2, 3, 4, 5 }
 numbers.pop_back();     // numbers = { 2, 3, 4 }
 numbers.clear();    // numbers ={}
