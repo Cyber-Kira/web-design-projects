@@ -1,3 +1,20 @@
+
+@import url(https://fonts.googleapis.com/css?family=Cabin);
+
+$font-family: "Cabin", serif;
+$background-color: #383882;
+$primary-color: #5b58c2;
+$secondary-color: #7f7be6;
+$text-color: #e0e0e0;
+$border-color: #7b78c7;
+$disabled-status: #b2b0f5;
+$disabled-text: #ccc;
+$error-status: #f12c4acf;
+$error-text: #ffa0ae;
+$success-text: #31f75de8;
+$success-status: #1fb77fd9;
+$white: #fff;
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -146,3 +163,16 @@ pre {
   padding: 0 .5rem;
   transition: .5s;
 }
+
+.content { margin-top:54px; }
+.header {padding:15px; position:fixed; top:0; width:100%; z-index:9999; }
+.left-title { width:80px; color:#FFF; font-size:18px; float:left; }
+.right-title { width:150px; text-align:right; float:right; color:#FFF;  }
+.quiz-body { margin-top:15px; padding-bottom:50px; }
+.option-block-container { margin-top:20px; max-width:420px; }
+.option-block { padding:10px; background:aliceblue; border:1px solid #84c5fe; margin-bottom:10px; cursor:pointer; }
+.result-question { font-weight:bold; }
+.c-wrong { margin-left:20px; color:#FF0000; }
+.c-correct {  margin-left:20px; color:green; }
+.last-row { border-bottom:1px solid #ccc; padding-bottom:25px; margin-bottom:25px; }
+.res-header { border-bottom:1px solid #ccc; margin-bottom:15px; padding-bottom:15px; }
