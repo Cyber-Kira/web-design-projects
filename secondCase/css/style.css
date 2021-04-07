@@ -176,3 +176,33 @@ pre {
 .c-correct {  margin-left:20px; color:green; }
 .last-row { border-bottom:1px solid #ccc; padding-bottom:25px; margin-bottom:25px; }
 .res-header { border-bottom:1px solid #ccc; margin-bottom:15px; padding-bottom:15px; }
+
+.tabluc {
+  margin: 0 auto;
+}
+.tabluc tr {
+  text-align: center;
+}
+.raznui_kolir_td {
+  color: #F7E999;
+}
+.tabluc td {
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 0.97em;
+  line-height: 1.55;
+  color: black;
+  margin-top: 0px;
+  letter-spacing: 0.02em;
+}
+.tabluc td {
+  background: #34495E;
+  color: #fff!important;
+  border-radius: .4em;
+  -webkit-border-radius: .4em;
+  -moz-border-radius: .4em;
+  overflow: hidden;
+  padding: 10px;
+  text-align: center;
+}
