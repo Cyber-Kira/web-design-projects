@@ -953,3 +953,13 @@ $("#previous").click(function (e) {
   }
   jsq.changeQuestion(-1);
 });
+
+window.addEventListener("scroll", function () {
+  if (window.scrollY > 45) {
+    document.querySelector(".sticky-top").classList.add("white");
+    document.querySelector(".sticky-top").classList.remove("transparent");
+  } else {
+    document.querySelector(".sticky-top").classList.remove("white");
+    document.querySelector(".sticky-top").classList.add("transparent");
+  }
+});
