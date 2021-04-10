@@ -8,9 +8,12 @@ html {
   font-size: 18px;
 }
 
-h1, h2, h3, p {
+h1,
+h2,
+h3,
+p {
   font-family: Helvetica, sans-serif;
-  padding-bottom: .625rem;
+  padding-bottom: 0.625rem;
 }
 
 h1 {
@@ -29,11 +32,11 @@ img {
 }
 
 a {
-  overflow-wrap: break-word
+  overflow-wrap: break-word;
 }
 
 p {
-  padding-bottom: .5rem;
+  padding-bottom: 0.5rem;
 }
 
 li {
@@ -48,22 +51,39 @@ table {
 pre {
   margin-bottom: 1rem;
   background-color: rgb(56, 67, 119);
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 5px;
   overflow: auto;
   max-height: 550px;
   color: white;
 }
 
+footer {
+  position: relative;
+  display: block;
+}
+
+.main_info div {
+  margin-right: 2em;
+}
+
+.navbar {
+  margin-bottom: 1rem;
+}
+
+.main_info div div {
+  width: 100%;
+}
+
 .main-row {
   display: flex;
-  height: 75vh;
+  min-height: 75vh;
   align-items: center;
 }
 
 .col-sm ul {
   list-style: none;
-  padding-left: .8rem;
+  padding-left: 0.8rem;
 }
 
 .col-sm ul a {
@@ -72,23 +92,27 @@ pre {
   font-family: Helvetica, sans-serif;
 }
 
+.col-sm-8 {
+  padding: 0 2em;
+}
 
 .secondary-color {
-  background-color: rgba(101, 154, 210, .4);
+  background-color: rgba(101, 154, 210, 0.4);
 }
 
 .white {
   background-color: rgba(101, 154, 210, 1);
-  transition: .25s all;
+  transition: 0.25s all;
 }
 
 .card {
   margin-top: 3rem;
   padding: 2rem;
-  background: #FFFFFF;
+  background: #ffffff;
 
-  box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,0.132),0 0.3px 0.9px 0 rgba(0,0,0,0.108);
-  border-radius : 4px;
+  box-shadow: 0 1.6px 3.6px 0 rgba(0, 0, 0, 0.132),
+    0 0.3px 0.9px 0 rgba(0, 0, 0, 0.108);
+  border-radius: 4px;
   height: 100%;
 }
 
@@ -113,8 +137,8 @@ pre {
 
 .card li a:hover {
   background-color: #c1d6ed;
-  color: rgba(0,0,0,.9);
-  transition: .35s;
+  color: rgba(0, 0, 0, 0.9);
+  transition: 0.35s;
 }
 
 .btn-main {
@@ -155,22 +179,69 @@ pre {
   width: 100%;
   height: 50px;
   align-items: center;
-  padding: 0 .5rem;
-  transition: .5s;
+  padding: 0 0.5rem;
+  transition: 0.5s;
 }
 
-.content { margin-top:54px; }
-.header {padding:15px; position:fixed; top:0; width:100%; z-index:9999; }
-.left-title { width:80px; color:#FFF; font-size:18px; float:left; }
-.right-title { width:150px; text-align:right; float:right; color:#FFF;  }
-.quiz-body { margin-top:15px; padding-bottom:50px; }
-.option-block-container { margin-top:20px; max-width:420px; }
-.option-block { padding:10px; background:aliceblue; border:1px solid #84c5fe; margin-bottom:10px; cursor:pointer; }
-.result-question { font-weight:bold; }
-.c-wrong { margin-left:20px; color:#FF0000; }
-.c-correct {  margin-left:20px; color:green; }
-.last-row { border-bottom:1px solid #ccc; padding-bottom:25px; margin-bottom:25px; }
-.res-header { border-bottom:1px solid #ccc; margin-bottom:15px; padding-bottom:15px; }
+.content {
+  margin-top: 54px;
+}
+.header {
+  padding: 15px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9999;
+}
+.left-title {
+  width: 80px;
+  color: #fff;
+  font-size: 18px;
+  float: left;
+}
+.right-title {
+  width: 150px;
+  text-align: right;
+  float: right;
+  color: #fff;
+}
+.quiz-body {
+  margin-top: 15px;
+  padding-bottom: 50px;
+}
+.option-block-container {
+  margin-top: 20px;
+  max-width: 420px;
+}
+.option-block {
+  padding: 10px;
+  padding-left: 2.5em;
+  background: aliceblue;
+  border: 1px solid #84c5fe;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.result-question {
+  font-weight: bold;
+}
+.c-wrong {
+  margin-left: 20px;
+  color: #ff0000;
+}
+.c-correct {
+  margin-left: 20px;
+  color: green;
+}
+.last-row {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+}
+.res-header {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
 
 .tabluc {
   margin: 0 auto;
@@ -179,10 +250,10 @@ pre {
   text-align: center;
 }
 .raznui_kolir_td {
-  color: #F7E999;
+  color: #f7e999;
 }
 .tabluc td {
-  font-family: 'Open Sans', Arial, sans-serif;
+  font-family: "Open Sans", Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   font-size: 0.97em;
@@ -192,11 +263,11 @@ pre {
   letter-spacing: 0.02em;
 }
 .tabluc td {
-  background: #34495E;
-  color: #fff!important;
-  border-radius: .4em;
-  -webkit-border-radius: .4em;
-  -moz-border-radius: .4em;
+  background: #34495e;
+  color: #fff !important;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
   overflow: hidden;
   padding: 10px;
   text-align: center;
